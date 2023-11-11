@@ -17,21 +17,54 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["id"])) {
 
     if ($consulta_existencia->num_rows > 0) {
         // Obtener los valores del formulario
-        $nombre = $_POST["nombre"];
-        $direccion = $_POST["direccion"];
-        $telefono = $_POST["telefono"];
-        $contacto = $_POST["contacto"];
+        $nombre = isset($_POST["nombre"]) ? $_POST["nombre"] : null;
+        $direccion = isset($_POST["direccion"]) ? $_POST["direccion"] : null;
+        $telefono = isset($_POST["telefono"]) ? $_POST["telefono"] : null;
+        $contacto = isset($_POST["contacto"]) ? $_POST["contacto"] : null;
 
-        // Preparar la consulta de modificación
-        $secuencia = $conexion->prepare("UPDATE proveedores SET NombreProv = ?, Direccion = ?, Telefono = ?, PersonaContacto = ? WHERE idProveedor = ?");
-        $secuencia->bind_param("ssssi", $nombre, $direccion, $telefono, $contacto, $id);
+        // Construir la consulta de modificación dinámicamente
+        $consulta_modificacion = "UPDATE proveedores SET ";
+        $valores = [];
 
-        // Ejecutar la consulta
-        if ($secuencia->execute()) {
-            echo "<script>mostrarAlerta();</script>";
-            echo "Proveedor modificado exitosamente";
+        if ($nombre !== null) {
+            $consulta_modificacion .= "NombreProv = ?, ";
+            $valores[] = $nombre;
+        }
+
+        if ($direccion !== null) {
+            $consulta_modificacion .= "Direccion = ?, ";
+            $valores[] = $direccion;
+        }
+
+        if ($telefono !== null) {
+            $consulta_modificacion .= "Telefono = ?, ";
+            $valores[] = $telefono;
+        }
+
+        if ($contacto !== null) {
+            $consulta_modificacion .= "PersonaContacto = ?, ";
+            $valores[] = $contacto;
+        }
+
+        // Eliminar la coma final si hay campos para modificar
+        if (!empty($valores)) {
+            $consulta_modificacion = rtrim($consulta_modificacion, ", ");
+            $consulta_modificacion .= " WHERE idProveedor = ?";
+            $valores[] = $id;
+
+            // Preparar la consulta de modificación
+            $secuencia = $conexion->prepare($consulta_modificacion);
+            $secuencia->bind_param(str_repeat("s", count($valores)), ...$valores);
+
+            // Ejecutar la consulta
+            if ($secuencia->execute()) {
+                echo "<script>mostrarAlerta();</script>";
+                echo "Proveedor modificado exitosamente";
+            } else {
+                echo "Error al modificar el proveedor: " . $secuencia->error;
+            }
         } else {
-            echo "Error al modificar el proveedor: " . $secuencia->error;
+            echo "No se proporcionaron campos para modificar.";
         }
     } else {
         echo "No existe un proveedor con ese ID.";
@@ -66,13 +99,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["id"])) {
         <label for="id">ID del Proveedor a modificar:</label>
         <input type="text" name="id" id="id" size="10" required><br><br>
         <label for="nombre">Nuevo Nombre:</label>
-        <input type="text" name="nombre" id="nombre" required><br><br>
+        <input type="text" name="nombre" id="nombre"><br><br>
         <label for="direccion">Nueva Dirección:</label>
-        <input type="text" name="direccion" id="direccion" required><br><br>
+        <input type="text" name="direccion" id="direccion"><br><br>
         <label for="telefono">Nuevo Teléfono:</label>
-        <input type="text" name="telefono" id="telefono" required><br><br>
+        <input type="text" name="telefono" id="telefono"><br><br>
         <label for="contacto">Nueva Persona de Contacto:</label>
-        <input type="text" name="contacto" id="contacto" required><br><br>
+        <input type="text" name="contacto" id="contacto"><br><br>
         <button type="submit">Modificar Proveedor</button>
     </form>
 
