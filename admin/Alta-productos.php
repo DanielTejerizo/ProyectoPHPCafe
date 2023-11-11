@@ -2,7 +2,7 @@
 include('../conexion.php'); // Asegúrate de ajustar la ruta correctamente
 
 // Verificar si se ha enviado el formulario
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["idProducto"])) {
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["id"])) {
     // Obtener los valores del formulario
     $id = $_POST["id"];
     $nombreProd = $_POST["nombreProd"];
@@ -15,19 +15,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["idProducto"])) {
     $conexion = conectar();
 
     // Preparar la consulta de inserción
-$secuencia = $conexion->prepare("INSERT INTO Productos (idProducto, NombreProd, Precio, Stock, IdCategoria, idProveedor) VALUES (?, ?, ?, ?, ?, ?)");
+    $secuencia = $conexion->prepare("INSERT INTO Productos (idProducto, NombreProd, Precio, Stock, IdCategoria, idProveedor) VALUES (?, ?, ?, ?, ?, ?)");
 
-// Corregir la línea de bind_param
-$secuencia->bind_param('ssssid', $id, $nombreProd, $precio, $stock, $idCategoria, $idProveedor);
+    // Corregir la línea de bind_param
+    $secuencia->bind_param('ssssid', $id, $nombreProd, $precio, $stock, $idCategoria, $idProveedor);
 
-// Ejecutar la consulta
-if ($secuencia->execute()) {
-    echo "<script>mostrarAlerta();</script>";
-    echo "Producto dado de alta exitosamente";
-} else {
-    echo "Error al dar de alta el producto: " . $secuencia->error;
-}
-
+    // Ejecutar la consulta
+    if ($secuencia->execute()) {
+        echo "<script>mostrarAlerta();</script>";
+        echo "Producto dado de alta exitosamente";
+    } else {
+        echo "Error al dar de alta el producto: " . $secuencia->error;
+    }
 
     // Cerrar la conexión
     $conexion->close();
@@ -52,7 +51,7 @@ if ($secuencia->execute()) {
 
     <form method="POST" action="<?php echo $_SERVER["PHP_SELF"]; ?>">
         <label for="id">idProducto:</label>
-        <input type="text" name="id" id="id" required><br><br>    
+        <input type="text" name="id" id="id" required><br><br>
         <label for="nombreProd">Nombre del Producto:</label>
         <input type="text" name="nombreProd" id="nombreProd" required><br><br>
         <label for="precio">Precio:</label>
