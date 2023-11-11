@@ -2,6 +2,7 @@
 include('../conexion.php'); // Asegúrate de ajustar la ruta correctamente
 
 // Verificar si se ha enviado el formulario y si la clave "id" está definida
+// Verificar si se ha enviado el formulario y si la clave "id" está definida
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["id"])) {
     // Obtener el valor del ID del formulario
     $id = $_POST["id"];
@@ -16,31 +17,33 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["id"])) {
     $consulta_existencia->store_result();
 
     if ($consulta_existencia->num_rows > 0) {
-        // Obtener los valores del formulario
-        $nombre = isset($_POST["nombre"]) ? $_POST["nombre"] : null;
-        $direccion = isset($_POST["direccion"]) ? $_POST["direccion"] : null;
-        $telefono = isset($_POST["telefono"]) ? $_POST["telefono"] : null;
-        $contacto = isset($_POST["contacto"]) ? $_POST["contacto"] : null;
-
         // Construir la consulta de modificación dinámicamente
         $consulta_modificacion = "UPDATE proveedores SET ";
         $valores = [];
 
+        // Nombre
+        $nombre = isset($_POST["nombre"]) ? $_POST["nombre"] : null;
         if ($nombre !== null) {
             $consulta_modificacion .= "NombreProv = ?, ";
             $valores[] = $nombre;
         }
 
+        // Dirección
+        $direccion = isset($_POST["direccion"]) ? $_POST["direccion"] : null;
         if ($direccion !== null) {
             $consulta_modificacion .= "Direccion = ?, ";
             $valores[] = $direccion;
         }
 
+        // Teléfono
+        $telefono = isset($_POST["telefono"]) ? $_POST["telefono"] : null;
         if ($telefono !== null) {
             $consulta_modificacion .= "Telefono = ?, ";
             $valores[] = $telefono;
         }
 
+        // Persona de contacto
+        $contacto = isset($_POST["contacto"]) ? $_POST["contacto"] : null;
         if ($contacto !== null) {
             $consulta_modificacion .= "PersonaContacto = ?, ";
             $valores[] = $contacto;
@@ -73,6 +76,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["id"])) {
     // Cerrar la conexión
     $conexion->close();
 }
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -94,20 +98,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["id"])) {
 <body>
     <h1>Modificación de Proveedores</h1>
 
-    <!-- Formulario para modificar un proveedor por su ID -->
-    <form method="POST" action="<?php echo $_SERVER["PHP_SELF"]; ?>" onsubmit="return confirmarModificacion();">
-        <label for="id">ID del Proveedor a modificar:</label>
-        <input type="text" name="id" id="id" size="10" required><br><br>
-        <label for="nombre">Nuevo Nombre:</label>
-        <input type="text" name="nombre" id="nombre"><br><br>
-        <label for="direccion">Nueva Dirección:</label>
-        <input type="text" name="direccion" id="direccion"><br><br>
-        <label for="telefono">Nuevo Teléfono:</label>
-        <input type="text" name="telefono" id="telefono"><br><br>
-        <label for="contacto">Nueva Persona de Contacto:</label>
-        <input type="text" name="contacto" id="contacto"><br><br>
-        <button type="submit">Modificar Proveedor</button>
-    </form>
+
+<form method="POST" action="<?php echo $_SERVER["PHP_SELF"]; ?>" onsubmit="return confirmarModificacion();">
+    <label for="id">ID del Proveedor a modificar:</label>
+    <input type="text" name="id" id="id" size="10" required><br><br>
+    <label for="nombre">Nuevo Nombre:</label>
+    <input type="text" name="nombre" id="nombre"><br><br>
+    <label for="direccion">Nueva Dirección:</label>
+    <input type="text" name="direccion" id="direccion"><br><br>
+    <label for="telefono">Nuevo Teléfono:</label>
+    <input type="text" name="telefono" id="telefono"><br><br>
+    <label for="contacto">Nueva Persona de Contacto:</label>
+    <input type="text" name="contacto" id="contacto"><br><br>
+    <button type="submit">Modificar Proveedor</button>
+</form>
+
 
     <div>
         <?php
