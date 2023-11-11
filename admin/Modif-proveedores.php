@@ -114,6 +114,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["id"])) {
 </form>
 
 
+
     <div>
         <?php
         // Conectar a la base de datos
@@ -153,6 +154,15 @@ if ($consulta_proveedores->num_rows > 0) {
         $conexion->close();
         ?>
     </div>
+
+    <form action="Alta-proveedores.php" method="post">
+        <button type="submit">Alta</button>
+    </form>
+
+    <form action="Baja-proveedores.php" method="post">
+        <button type="submit">Baja</button>
+    </form>
+
 </body>
 
 </html>

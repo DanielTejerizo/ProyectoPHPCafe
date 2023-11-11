@@ -101,6 +101,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["id"])) {
         $conexion->close();
         ?>
     </div>
+
+    <form action="Alta-proveedores.php" method="post">
+        <button type="submit">Alta</button>
+    </form>
+
+    <form action="Modif-proveedores.php" method="post">
+        <button type="submit">Modificar</button>
+    </form>
+
 </body>
 
 </html>

@@ -2,7 +2,7 @@
 include('../conexion.php'); // Asegúrate de ajustar la ruta correctamente
 
 // Verificar si se ha enviado el formulario
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["id"])) {
     // Obtener los valores del formulario
     $id = $_POST["id"];
     $nombre = $_POST["nombre"];
