@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS `trabajophp`.`Proveedores` (
   `idProveedor` INT NOT NULL,
   `NombreProv` VARCHAR(45) NOT NULL,
   `Direccion` VARCHAR(200) NOT NULL,
-  `Telefono` INT NOT NULL,
+  `Telefono` VARCHAR(15) NOT NULL,
   `PersonaContacto` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`idProveedor`))
 ENGINE = InnoDB;
