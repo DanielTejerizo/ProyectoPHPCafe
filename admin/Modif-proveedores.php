@@ -119,35 +119,35 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["id"])) {
         // Conectar a la base de datos
         $conexion = conectar();
 
-        // Consultar la tabla de proveedores
-        $consulta_proveedores = $conexion->query("SELECT idProveedor, NombreProv, Direccion, Telefono, PersonaContacto FROM proveedores");
+        // Consultar la tabla de proveedores ordenados por ID
+$consulta_proveedores = $conexion->query("SELECT idProveedor, NombreProv, Direccion, Telefono, PersonaContacto FROM proveedores ORDER BY idProveedor");
 
-        // Verificar si hay resultados
-        if ($consulta_proveedores->num_rows > 0) {
-            echo "<h2>Lista de Proveedores</h2>";
-            echo "<table border='1'>
-                <tr>
-                    <th>ID</th>
-                    <th>Nombre</th>
-                    <th>Dirección</th>
-                    <th>Teléfono</th>
-                    <th>Persona de Contacto</th>
-                </tr>";
+// Verificar si hay resultados
+if ($consulta_proveedores->num_rows > 0) {
+    echo "<h2>Lista de Proveedores</h2>";
+    echo "<table border='1'>
+        <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Dirección</th>
+            <th>Teléfono</th>
+            <th>Persona de Contacto</th>
+        </tr>";
 
-            while ($fila = $consulta_proveedores->fetch_assoc()) {
-                echo "<tr>
-                    <td>{$fila['idProveedor']}</td>
-                    <td>{$fila['NombreProv']}</td>
-                    <td>{$fila['Direccion']}</td>
-                    <td>{$fila['Telefono']}</td>
-                    <td>{$fila['PersonaContacto']}</td>
-                </tr>";
-            }
+    while ($fila = $consulta_proveedores->fetch_assoc()) {
+        echo "<tr>
+            <td>{$fila['idProveedor']}</td>
+            <td>{$fila['NombreProv']}</td>
+            <td>{$fila['Direccion']}</td>
+            <td>{$fila['Telefono']}</td>
+            <td>{$fila['PersonaContacto']}</td>
+        </tr>";
+    }
 
-            echo "</table>";
-        } else {
-            echo "No hay proveedores registrados.";
-        }
+    echo "</table>";
+} else {
+    echo "No hay proveedores registrados.";
+}
 
         // Cerrar la conexión
         $conexion->close();
