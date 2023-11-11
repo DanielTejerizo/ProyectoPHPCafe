@@ -34,8 +34,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["id"])) {
 <html>
 
 <head>
-    <title>Alta de Productos</title>
-    <link rel="stylesheet" href="../css/Alta.css">
+    <title>Alta de Proveedores</title>
+    <link rel="stylesheet" href="../Css/Alta.css">
     <script>
         function mostrarAlerta() {
             alert("Proveedor dado de alta correctamente");
