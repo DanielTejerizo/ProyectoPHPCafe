@@ -103,6 +103,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <form action="Baja-proveedores.php" method="post">
         <button type="submit">Borrar</button>
     </form>
+
+    <form action="Modif-proveedores.php" method="post">
+        <button type="submit">Modificar</button>
+    </form>
 </body>
 
 </html>
