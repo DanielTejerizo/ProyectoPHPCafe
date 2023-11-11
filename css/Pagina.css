@@ -1,0 +1,484 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
+/*Ajustes totales*/
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    /*Quitar todos los estilos y decoraciones en las listas*/
+    text-decoration: none;
+    list-style: none; 
+}
+
+body{
+    font-family: 'Poppins', sans-serif;
+}
+
+/*Estilamos los contenedores*/
+.container{
+    max-width: 1200px;
+    margin: 0 auto; /*Para que se centre*/
+}
+
+/*Header*/
+.header{
+    background-image: linear-gradient( /*Fondo imagen y el linear-gradient es para que sea oscuro*/
+        rgba(0,0,0,0.7),
+        rgba(0,0,0,0.7)),
+        url(../Img/images/bg.jpg);
+    background-position: center bottom; /*Posicion de la imagen*/
+    background-repeat: no-repeat; /*Que no se repita*/
+    background-size: cover; /*Que cubra todo*/
+    min-height: 70vh; /*Lo que quieras que ocupe*/
+    display: flex;
+    align-items: center; /*Centrarlo*/
+}
+
+/*Estilamos el menu*/
+.menu{
+    position: absolute;
+    /*Lo subimos arriba*/
+    top: 0;
+    left: 0;
+    right: 0;
+    /*Lo centramos y lo espaciamos*/
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/*Tamaño, borde y transicion del logo*/
+.logo img{
+    width: 70px;
+    height: 60px;
+    border-radius: 100px;
+    transition: all 0.4s;
+}
+
+/*Al pasar el cursro*/
+.logo img:hover{
+    cursor: pointer;
+    opacity: 0.9;
+    transform: translateX(5px);
+}
+
+/*Estilamos los elementos del menu*/
+.menu .navbar ul li{
+    position: relative;
+    float: left;
+}
+
+/*Estilamos los elementos del menu*/
+.menu .navbar ul li a{
+    font-size: 18px;
+    padding: 20px;
+    color: #FFFDFC;
+    display: block;
+    font-weight: 600;
+}
+
+/*Estilamos los elementos del menu*/
+.menu .navbar ul li a:hover{
+    color: #ce967b;
+    transition: all 0.5s;
+}
+
+/*Estilo checkbox*/
+#menu{
+    display: none; /*Para que desaparezca*/
+}
+
+/*Estilo la barras*/
+.menu-icono{
+    width: 25px; /*Cambiar tamaño*/
+    cursor: pointer;
+    display: none;/*Las oculta*/
+}
+
+/*Estilo al texto delheader*/
+.header-content{
+    text-align: center; /*Centrarlo*/
+}
+
+/*Al titulo*/
+.header-content h1{
+    font-size: 75px; /*Tamaño*/
+    line-height: 80px;
+    color: #F9FAFC;
+    text-transform: uppercase; /*Poner en mayusculas*/
+    margin-bottom: 35px; /*Margen de abajo*/
+}
+/*Al p*/
+.header-content p{ /*Lo mismo de antes*/
+    font-size: 16px;
+    color: #C5C5C5;
+    padding: 0 250px;
+    margin-bottom: 25px;
+}
+
+/*Estlo boton*/
+.btn-1{
+    padding: 20px 35px;
+    background-color: #ce967b;
+    color: #F9FAFC;
+    text-transform: uppercase;
+    border: none;
+    border-radius: 5px;
+    transition: all 0.4s;
+}
+
+.btn-1:hover{
+    transform: translateY(-5px);
+    cursor: pointer;
+    box-shadow: 0 5px 10px #d57443;
+}
+
+/*Ahora estilamos las secciones con fotos*/
+.coffee{
+    padding: 100px 0;
+    background-color: #E1E2E6;
+    position: relative;
+}
+
+/*Centramos el texto*/
+.coffee-content{
+    text-align: center;
+}
+
+/*Estilamos los titulos*/
+.coffee-content h2{
+    font-size: 85px;
+    line-height: 70px; /*Altura de la letra*/
+    color: #323337;
+    text-transform: uppercase;
+    padding: 0 250px;
+    margin-bottom: 15px;
+}
+
+/*Estilamos el p*/
+.txt-p{
+    font-size: 15px;
+    color: #414247;
+    padding: 0 250px;
+    margin-bottom: 35px;
+}
+
+/*Estilamos los grupos*/
+.coffee-group{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 50px;
+}
+
+/*Tamaño imagenes*/
+.coffee-1 img{
+    width: 200px;
+}
+
+/*Posicion de los granos de cafe*/
+.coffee-img{
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+/*Estilo titulo*/
+.coffee-1 h3{
+    color: #323337;
+    font-size: 30px;
+    margin-bottom: 15px;
+}
+
+/*Estilo parrafo*/
+.coffee-1 p{
+    color: #323337;
+    font-size: 20px;
+    margin-bottom: 15px;
+}
+
+/*Estilo servicios*/
+.services{
+    background-image: linear-gradient( /*Fondo imagen*/
+        rgba(0,0,0,0.7),
+        rgba(0,0,0,0.7)),
+        url(../Img/images/bg2.jpg);
+    background-position: center; /*Posicion*/
+    background-repeat: no-repeat; /*No se repite*/
+    background-size: cover;
+    background-attachment: fixed; /*Que se quede fija incluso cuando usas la rueda del raton*/
+    padding: 100px 0;
+}
+
+/*Estilo del contenedor*/
+.services-content{
+    text-align: center;
+}
+
+/*Estilo titulo*/
+.services-content h2{
+    font-size: 55px;
+    line-height: 70px;
+    color: #F9FAFC;
+    text-transform: uppercase;
+    margin-bottom: 50px;
+}
+
+/*Estilo p*/
+.services-content p{
+    font-size: 16px;
+    color: #C5C5C5;
+    margin-bottom: 50px;
+    padding: 0 100px;
+}
+
+/*Estilo contenedor grupos*/
+.services-group{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 50px;
+}
+
+/*Servicios contenedor*/
+.services-1{
+    padding: 0 100px;
+}
+
+/*Imagenes*/
+.services-1 img{
+    width: 25px;
+    margin-bottom: 15px;
+}
+
+/*Estilo texto*/
+.services-1 h3{
+    color: #F9FAFC;
+    font-size: 18px;
+    transition: all 0.4s;
+}
+
+.services-1 h3:hover{
+    color: #ce967b;
+    cursor: pointer;
+    transition: all 0.5s;
+}
+
+/*Seccion principal*/
+.general{
+    display: flex;
+}
+
+/*Estilo apartado texto*/
+.general-1{
+    width: 50%;
+    padding: 100px 250px 100px 100px;
+    background-color: #E1E2E6;
+}
+
+/*Imagenes*/
+.general-2{
+    background-image: url(../Img/images/coffe-1.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 50%;
+}
+
+.general-3{
+    background-image: url(../Img/images/coffee-2.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 50%;
+}
+
+/*h2*/
+.general-1 h2{
+    font-size: 55px;
+    line-height: 70px;
+    color: #323337;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+}
+
+/*p*/
+p{
+    font-size: 16px;
+    color: #414247;
+    margin: 25px 0 45px 0;
+}
+
+/*Contenedor blog*/
+.blog{
+    padding: 100px 0;
+    text-align: center;
+}
+
+/*Contenedor blogs*/
+.blog-content{
+    display: flex;
+    justify-content: space-between;
+}
+
+/*blogs*/
+.blog-1{
+    padding: 15px 55px;
+}
+
+/*Imagenes*/
+.blog-1 img{
+    width: 150px;
+    border-radius: 15px;
+    margin-bottom: 15px;
+}
+
+/*Titulos*/
+.blog-1 h2{
+    font-size: 25px;
+    color: #323337;
+}
+
+/*Pie de pagina*/
+.footer{
+    padding: 100px 0;
+    background-color: #000000;
+}
+
+/*Contenedor footer*/
+.footer-content{
+    display: flex;
+    justify-content: space-between;
+}
+
+/*Titulos*/
+.link h3{
+    font-size: 18px;
+    color: #F9FAFC;
+    margin-bottom: 15px;
+}
+
+/*Enlaces*/
+.link a{
+    font-size: 16px;
+    color: #C5C5C5;
+    display: block;
+    margin-bottom: 15px;
+    transition: all 0.4s;
+}
+
+.link a:hover{
+    color: #ce967b;
+    transition: all 0.5s;
+}
+
+@media(max-width: 991px){
+    .menu{
+        padding: 30px;
+    }
+    
+    /*Mostrar barras*/
+    .menu label img{
+        display: initial;
+    }
+
+    /*Colocacion y esconder*/
+    .menu .navbar{
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background-color: #323337;
+        display: none;
+    }
+
+    .menu .navbar ul li{
+        width: 100%;
+    }
+
+    /*Mostrar al clickar*/
+    #menu:checked ~ .navbar{
+        display: initial;
+    }
+
+    .header{
+        min-height: 0vh;
+    }
+
+    .header-content{
+        padding: 100px 30px;
+    }
+
+    .header-content p{
+        padding: 0;
+    }
+
+    .coffee{
+        padding: 30px;
+    }
+
+    .coffee-content h2{
+        padding: 0;
+    }
+
+    .txt-p{
+        padding: 0;
+    }
+
+    .coffee-group{
+        flex-direction: column;
+    }
+
+    .coffee-img{
+        display: none;
+    }
+
+    .services{
+        padding: 30px;
+    }
+
+    .services-content p{
+        padding: 0;
+    }
+
+    .services-group{
+        flex-direction: column;
+        margin-bottom: 0;
+    }
+
+    .services-1{
+        margin-bottom: 25px;
+    }
+
+    .general{
+        flex-direction: column;
+    }
+
+    .general-1{
+        width: 100%;
+        padding: 30px;
+        text-align: center;
+    }
+
+    .general-2, .general-3{
+        display: none;
+    }
+
+    .blog{
+        padding: 30px;
+    }
+
+    .blog-content{
+        flex-direction: column;
+    }
+
+    .blog-1{
+        padding: 0;
+    }
+
+    .footer{
+        padding: 30px;
+    }
+}
+
+.footer-contentç{
+    flex-direction: column;
+    text-align: center;
+}

@@ -1,0 +1,13 @@
+{
+    "workbench.colorTheme": "Ace Palenight",
+    "files.eol":"<br>",
+    // CONFIGURACIÓN PARA PHP
+    "php.validate.executablePath": "C:\\xampp\\php\\php.exe",
+    "php.validate.run": "onType",
+    "php.executablePath": "C:\\xampp\\php\\php.exe",
+    "explorer.confirmDelete": false,
+    "grunt.autoDetect": "on",
+    "gulp.autoDetect": "on",
+    "jake.autoDetect": "on",
+    "files.autoSave": "afterDelay"
+}
