@@ -71,15 +71,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["idPedido"])) {
         <select name="idCliente" id="idCliente">
             <?php
             $conexion = conectar();
-            $consulta_clientes = $conexion->query("SELECT idCliente, NombreCliente FROM Clientes");
+            $consulta_clientes = $conexion->query("SELECT idCliente, NombreCli FROM Clientes");
 
             if ($consulta_clientes->num_rows > 0) {
                 while ($fila = $consulta_clientes->fetch_assoc()) {
-                    echo "<option value='{$fila['idCliente']}'>{$fila['NombreCliente']}</option>";
+                    echo "<option value='{$fila['idClientes']}'>{$fila['NombreCli']}</option>";
                 }
             } else {
                 echo "<option value=''>No hay clientes disponibles</option>";
             }
+
             $conexion->close();
             ?>
         </select><br><br>
@@ -87,15 +88,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["idPedido"])) {
         <select name="idEmpleado" id="idEmpleado">
             <?php
             $conexion = conectar();
-            $consulta_empleados = $conexion->query("SELECT idEmpleado, NombreEmpleado FROM Empleados");
+            $consulta_empleados = $conexion->query("SELECT idEmpleado, NombreEmp FROM Empleados");
 
             if ($consulta_empleados->num_rows > 0) {
                 while ($fila = $consulta_empleados->fetch_assoc()) {
-                    echo "<option value='{$fila['idEmpleado']}'>{$fila['NombreEmpleado']}</option>";
+                    echo "<option value='{$fila['idEmpleado']}'>{$fila['NombreEmp']}</option>";
                 }
             } else {
                 echo "<option value=''>No hay empleados disponibles</option>";
             }
+
             $conexion->close();
             ?>
         </select><br><br>
