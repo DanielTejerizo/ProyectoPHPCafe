@@ -13,7 +13,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["idPedido"])) {
 
     $secuencia = $conexion->prepare("INSERT INTO Pedidos (idPedido, idProducto, Cantidad, Total, idCliente, idEmpleado) VALUES (?, ?, ?, ?, ?, ?)");
 
-    $secuencia->bind_param('iiisii', $id, $idPedido, $idProducto, $cantidad, $total, $idCliente, $idEmpleado);
+    $secuencia->bind_param('iiisii', $idPedido, $idProducto, $cantidad, $total, $idCliente, $idEmpleado);
 
     if ($secuencia->execute()) {
         echo "<script>mostrarAlerta();</script>";
