@@ -1,26 +1,20 @@
 <?php
-include('../conexion.php'); // Asegúrate de ajustar la ruta correctamente
+include('../conexion.php');
 
-// Verificar si se ha enviado el formulario
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["idPedido"])) {
-    // Obtener los valores del formulario
-    $idPedido = $_POST["idPedido"];
+    $idPedido = $_POST["id"];
     $idProducto = $_POST["idProducto"];
     $cantidad = $_POST["cantidad"];
     $total = $_POST["total"];
     $idCliente = $_POST["idCliente"];
     $idEmpleado = $_POST["idEmpleado"];
 
-    // Conectar a la base de datos
     $conexion = conectar();
 
-    // Preparar la consulta de inserción
     $secuencia = $conexion->prepare("INSERT INTO Pedidos (idPedido, idProducto, Cantidad, Total, idCliente, idEmpleado) VALUES (?, ?, ?, ?, ?, ?)");
 
-    // Corregir la línea de bind_param
-    $secuencia->bind_param('iiisii', $idPedido, $idProducto, $cantidad, $total, $idCliente, $idEmpleado);
+    $secuencia->bind_param('iiisii', $id, $idPedido, $idProducto, $cantidad, $total, $idCliente, $idEmpleado);
 
-    // Ejecutar la consulta
     if ($secuencia->execute()) {
         echo "<script>mostrarAlerta();</script>";
         echo "Pedido dado de alta exitosamente";
@@ -28,7 +22,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["idPedido"])) {
         echo "Error al dar de alta el pedido: " . $secuencia->error;
     }
 
-    // Cerrar la conexión
     $conexion->close();
 }
 ?>
@@ -50,30 +43,70 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["idPedido"])) {
     <h1>Alta de Pedidos</h1>
 
     <form method="POST" action="<?php echo $_SERVER["PHP_SELF"]; ?>">
-        <label for="idPedido">ID del Pedido:</label>
-        <input type="text" name="idPedido" id="idPedido" required><br><br>
+        <label for="id">ID del Pedido:</label>
+        <input type="text" name="id" id="id" required><br><br>
         <label for="idProducto">ID del Producto:</label>
-        <input type="text" name="idProducto" id="idProducto" required><br><br>
+        <select name="idProducto" id="idProducto">
+            <?php
+            $conexion = conectar();
+            $consulta_productos = $conexion->query("SELECT idProducto, NombreProd FROM Productos");
+
+            if ($consulta_productos->num_rows > 0) {
+                while ($fila = $consulta_productos->fetch_assoc()) {
+                    echo "<option value='{$fila['idProducto']}'>{$fila['NombreProd']}</option>";
+                }
+            } else {
+                echo "<option value=''>No hay productos disponibles</option>";
+            }
+
+            $conexion->close();
+            ?>
+
+        </select><br><br>
         <label for="cantidad">Cantidad:</label>
         <input type="text" name="cantidad" id="cantidad" required><br><br>
         <label for="total">Total:</label>
         <input type="text" name="total" id="total" required><br><br>
         <label for="idCliente">ID del Cliente:</label>
-        <input type="text" name="idCliente" id="idCliente" required><br><br>
+        <select name="idCliente" id="idCliente">
+            <?php
+            $conexion = conectar();
+            $consulta_clientes = $conexion->query("SELECT idCliente, NombreCliente FROM Clientes");
+
+            if ($consulta_clientes->num_rows > 0) {
+                while ($fila = $consulta_clientes->fetch_assoc()) {
+                    echo "<option value='{$fila['idCliente']}'>{$fila['NombreCliente']}</option>";
+                }
+            } else {
+                echo "<option value=''>No hay clientes disponibles</option>";
+            }
+            $conexion->close();
+            ?>
+        </select><br><br>
         <label for="idEmpleado">ID del Empleado:</label>
-        <input type="text" name="idEmpleado" id="idEmpleado" required><br><br>
+        <select name="idEmpleado" id="idEmpleado">
+            <?php
+            $conexion = conectar();
+            $consulta_empleados = $conexion->query("SELECT idEmpleado, NombreEmpleado FROM Empleados");
+
+            if ($consulta_empleados->num_rows > 0) {
+                while ($fila = $consulta_empleados->fetch_assoc()) {
+                    echo "<option value='{$fila['idEmpleado']}'>{$fila['NombreEmpleado']}</option>";
+                }
+            } else {
+                echo "<option value=''>No hay empleados disponibles</option>";
+            }
+            $conexion->close();
+            ?>
+        </select><br><br>
         <button type="submit">Confirmar</button>
     </form>
 
     <div>
         <?php
-        // Conectar a la base de datos
         $conexion = conectar();
-
-        // Consultar la tabla de pedidos ordenados por ID
         $consulta_pedidos = $conexion->query("SELECT idPedido, idProducto, Cantidad, Total, idCliente, idEmpleado FROM Pedidos ORDER BY idPedido");
 
-        // Verificar si hay resultados
         if ($consulta_pedidos->num_rows > 0) {
             echo "<h2>Lista de Pedidos</h2>";
             echo "<table border='1'>
@@ -102,12 +135,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["idPedido"])) {
             echo "No hay pedidos registrados.";
         }
 
-        // Cerrar la conexión
         $conexion->close();
         ?>
     </div>
 
-    <!-- Formularios para otras operaciones (Modificación, Baja, etc.) -->
     <form action="Modif-pedidos.php" method="post">
         <button type="submit">Modificación</button>
     </form>
