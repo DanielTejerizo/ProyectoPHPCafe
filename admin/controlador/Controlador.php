@@ -10,23 +10,23 @@
 <body>
     <h1>Panel de Modificación</h1>
 
-    <form action="Modif-categoria.php" method="post">
+    <form action="ConProd.php" method="post">
         <button type="submit">Productos</button>
     </form>
 
-    <form action="Modif-categoria.php" method="post">
+    <form action="ConPed.php" method="post">
         <button type="submit">Pedidos</button>
     </form>
 
-    <form action="Modif-categoria.php" method="post">
+    <form action="ConCat.php" method="post">
         <button type="submit">Categorias</button>
     </form>
 
-    <form action="Modif-categoria.php" method="post">
+    <form action="ConEmp.php" method="post">
         <button type="submit">Empleados</button>
     </form>
 
-    <form action="Modif-categoria.php" method="post">
+    <form action="ConCli.php" method="post">
         <button type="submit">Clientes</button>
     </form>
 
