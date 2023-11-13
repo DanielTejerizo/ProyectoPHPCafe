@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Panel de Modificación</title>
-    <link rel="stylesheet" href="../Css/Alta.css">
+    <link rel="stylesheet" href="../../Css/Alta.css">
 </head>
 
 <body>
