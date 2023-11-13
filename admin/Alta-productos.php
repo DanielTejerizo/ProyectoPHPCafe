@@ -158,5 +158,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["id"])) {
         <button type="submit">Baja</button>
     </form>
 </body>
-
 </html>
