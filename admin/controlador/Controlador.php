@@ -30,7 +30,7 @@
         <button type="submit">Clientes</button>
     </form>
 
-    <form action="Modif-categoria.php" method="post">
+    <form action="ConProv.php" method="post">
         <button type="submit">Proveedores</button>
     </form>
 

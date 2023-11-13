@@ -10,15 +10,15 @@
 <body>
     <h1>Panel de Modificación Proveedores</h1>
 
-    <form action="Modif-categoria.php" method="post">
+    <form action="../Alta-proveedores.php" method="post">
         <button type="submit">Alta</button>
     </form>
 
-    <form action="Modif-categoria.php" method="post">
+    <form action="../Baja-proveedores.php" method="post">
         <button type="submit">Baja</button>
     </form>
 
-    <form action="Modif-categoria.php" method="post">
+    <form action="Modif-proveedores.php" method="post">
         <button type="submit">Modificacion</button>
     </form>
 
