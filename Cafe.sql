@@ -175,4 +175,12 @@ INSERT INTO productos (idProducto, NombreProd, Precio, Stock, IdCategoria, idPro
 
 /*Pedido*/
 
-INSERT INTO pedidos (idPedido, idProducto, Cantidad, Total, idCliente, idEmpleado) values ('1', (select productos.idProducto from productos where productos.NombreProd = 'Café Puertorriqueño Suave'), 10, 10*(select productos.precio from productos where productos.idProducto = '2'),(select clientes.idCliente from clientes where clientes.NombreCli = 'Teresa Roman García'),(select empleados.idEmpleado from empleados where empleados.NombreEmp = 'Lucia García García'));
+INSERT INTO pedidos (idPedido, idProducto, Cantidad, Total, idCliente, idEmpleado) 
+VALUES (
+    '1', 
+    (SELECT productos.idProducto FROM productos WHERE productos.NombreProd = 'Café Puertorriqueño Suave'), 
+    10, 
+    10 * (SELECT productos.Precio FROM productos WHERE productos.NombreProd = 'Café Puertorriqueño Suave'),
+    (SELECT clientes.idCliente FROM clientes WHERE clientes.NombreCli = 'Teresa Roman García'),
+    (SELECT empleados.idEmpleado FROM empleados WHERE empleados.NombreEmp = 'Lucia García García')
+);

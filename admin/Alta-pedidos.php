@@ -2,12 +2,13 @@
 include('../conexion.php');
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["idPedido"])) {
-    $idPedido = $_POST["id"];
+    $idPedido = $_POST["idPedido"];
     $idProducto = $_POST["idProducto"];
     $cantidad = $_POST["cantidad"];
     $total = $_POST["total"];
     $idCliente = $_POST["idCliente"];
     $idEmpleado = $_POST["idEmpleado"];
+
 
     $conexion = conectar();
 
@@ -43,8 +44,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["idPedido"])) {
     <h1>Alta de Pedidos</h1>
 
     <form method="POST" action="<?php echo $_SERVER["PHP_SELF"]; ?>">
-        <label for="id">ID del Pedido:</label>
-        <input type="text" name="id" id="id" required><br><br>
+        <label for="idPedido">ID del Pedido:</label>
+        <input type="text" name="idPedido" id="idPedido" required><br><br>
         <label for="idProducto">ID del Producto:</label>
         <select name="idProducto" id="idProducto">
             <?php
