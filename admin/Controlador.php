@@ -10,8 +10,11 @@
 <body>
     <h1>Panel de Modificación</h1>
 
-    <h2>Modificar Producto</h2>
-    <a href="modificar_producto.php">Modificar Producto</a>
+    
+    <form action="Modif-categoria.php" method="post">
+        <h2>Modificar Producto</h2>
+        <button type="submit">Modificar</button>
+    </form>
 
     <h2>Modificar Proveedor</h2>
     <a href="modificar_proveedor.php">Modificar Proveedor</a>
