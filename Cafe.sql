@@ -58,6 +58,7 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `trabajophp`.`Usuarios` (
   `idUsuario` INT NOT NULL,
   `Tipo` VARCHAR(45) NOT NULL,
+  `Contrasenia` VARCHAR(200) NOT NULL,
   `idEmpleado` INT NOT NULL,
   PRIMARY KEY (`idUsuario`),
   INDEX `fk_Usuarios_Empleados1_idx` (`idEmpleado` ASC) VISIBLE,
