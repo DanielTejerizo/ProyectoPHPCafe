@@ -5,9 +5,9 @@ include('conexion.php');
 $mensajeError = "";
 
 // Verificar si se envió el formulario
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["id"])) {
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["idUsuario"])) {
     // Limpiar y recoger datos del formulario
-    $idUsuario = limpiarDatos($_POST["idUsuario"]);
+    $idUsuario = limpiarDatos($_POST["idUsuario"]); // Cambiado de "Nombreusuario" a "idUsuario"
     $contrasena = limpiarDatos($_POST["contrasena"]);
 
     $conexion = conectar();
@@ -18,7 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["id"])) {
 
     // Consulta para obtener la contraseña almacenada
     $consulta = $conexion->prepare("SELECT idUsuario, Contrasenia, Tipo FROM Usuarios WHERE idUsuario = ?");
-    $consulta->bind_param("i", $idUsuario);
+    $consulta->bind_param("s", $idUsuario);
 
     if ($consulta->execute()) {
         $consulta->store_result();
@@ -48,7 +48,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["id"])) {
         }
     } else {
         // Log de errores en lugar de mostrar al usuario
-        error_log("Error al realizar la consulta: " . $conexion->error);
+        error_log("Error al realizar la consulta en el inicio de sesión: " . $conexion->error);
         $mensajeError = "Error en el inicio de sesión. Por favor, inténtelo de nuevo más tarde.";
     }
 
@@ -92,8 +92,7 @@ function limpiarDatos($datos) {
         </form>
 
         <form method="post" action="registroCli.php">
-
-            <button type="submit">No tienes cuenta? Crea una!</button>
+            <button type="submit">¿No tienes cuenta? ¡Crea una!</button>
         </form>
     </div>
 </body>

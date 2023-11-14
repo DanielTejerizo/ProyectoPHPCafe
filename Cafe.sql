@@ -129,10 +129,10 @@ COLLATE = utf8mb4_0900_ai_ci;
 -- Table `trabajophp`.`usuarios`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `trabajophp`.`usuarios` (
-  `idUsuario` INT NOT NULL,
+  `NombreUsuario` VARCHAR(200) NOT NULL,
   `Tipo` VARCHAR(45) NOT NULL,
   `Contrasenia` VARCHAR(200) NOT NULL,
-  PRIMARY KEY (`idUsuario`))
+  PRIMARY KEY (`NombreUsuario`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;

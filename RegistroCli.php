@@ -1,10 +1,14 @@
 <?php
 include('conexion.php');
 
+// Inicializar mensajes
+$mensajeExito = "";
+$mensajeError = "";
+
 // Verificar si se envió el formulario
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["id"])) {
     // Recoger datos del formulario
-    $idUser = htmlspecialchars($_POST["id"]);
+    $idUsuario = htmlspecialchars($_POST["id"]);
     $contrasena = $_POST["contrasena"];
 
     if (strlen($contrasena) < 8) {
@@ -19,10 +23,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["id"])) {
             die("Conexión fallida: " . $conexion->connect_error);
         }
 
-        $consulta = $conexion->prepare("INSERT INTO Usuarios (idUsuario, Tipo, Contrasenia) VALUES (?, ?, ?)");
+        $consulta = $conexion->prepare("INSERT INTO usuarios (NombreUsuario, Tipo, Contrasenia) VALUES (?, ?, ?)");
         $tipo = "Cliente"; // O el tipo que desees asignar
 
-        $consulta->bind_param("iss", $idUser, $tipo, $hashContrasena);
+        $consulta->bind_param("sss", $idUsuario, $tipo, $hashContrasena);
 
 
         try {
@@ -54,15 +58,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["id"])) {
         <h1>Registro de Usuario</h1>
 
         <?php
-        if (isset($mensajeExito)) {
+        if (!empty($mensajeExito)) {
             echo "<p class='mensaje-exito'>$mensajeExito</p>";
-        } elseif (isset($mensajeError)) {
+        } elseif (!empty($mensajeError)) {
             echo "<p class='mensaje-error'>$mensajeError</p>";
         }
         ?>
 
         <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
-            <label for="id">id Usuario:</label>
+            <label for="id">Nombre de Usuario:</label>
             <input type="text" name="id" required><br>
 
             <label for="contrasena">Contraseña:</label>
@@ -72,8 +76,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["id"])) {
         </form>
 
         <form method="post" action="LoginCli.php">
-
-            <button type="submit">Inicar sesion</button>
+            <button type="submit">Iniciar sesión</button>
         </form>
     </div>
 </body>
