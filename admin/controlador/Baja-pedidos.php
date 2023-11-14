@@ -1,5 +1,5 @@
 <?php
-include('../conexion.php');
+include('../../conexion.php');
 
 // Verificar si se ha enviado el formulario
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["idPedidoBaja"])) {
@@ -32,7 +32,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["idPedidoBaja"])) {
 
 <head>
     <title>Baja de Pedidos</title>
-    <link rel="stylesheet" href="../css/Baja.css">
+    <link rel="stylesheet" href="../css/Alta.css">
 </head>
 
 <body>
