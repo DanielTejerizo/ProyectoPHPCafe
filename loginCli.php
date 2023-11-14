@@ -38,7 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["idUsuario"])) {
                 session_regenerate_id(true);
 
                 // Redireccionar a la página después del inicio de sesión
-                header("Location: Controlador/Controlador.php");
+                header("Location: Admin/Controlador/Controlador.php");
                 exit();
             } else {
                 $mensajeError = "La contraseña es incorrecta.";
