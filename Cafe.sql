@@ -160,7 +160,7 @@ INSERT INTO proveedores (idProveedor, NombreProv, Direccion, Telefono, PersonaCo
 
 /*Usuarios*/
 
-INSERT INTO usuarios (idUsuario, Tipo, idEmpleado) value ("1", "Estandar", (Select idEmpleado from empleados where empleados.idEmpleado = "1")),("2", "Estandar", (Select idEmpleado from empleados where empleados.idEmpleado = "2")),("3", "ADMIN", (Select idEmpleado from empleados where empleados.idEmpleado = "3")),("4", "ADMIN", (Select idEmpleado from empleados where empleados.idEmpleado = "4")),("5", "Estandar", (Select idEmpleado from empleados where empleados.idEmpleado = "5"));
+
 
 /*Productos*/
 
