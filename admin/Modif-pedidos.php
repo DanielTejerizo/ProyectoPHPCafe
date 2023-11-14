@@ -1,5 +1,5 @@
 <?php
-include('../conexion.php');
+include('../../conexion.php');
 
 // Verificar si se ha enviado el formulario de modificación
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["idPedidoModificar"])) {
@@ -36,6 +36,34 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["idPedidoModificar"])) 
     echo "ID del pedido a modificar no definido.";
     exit();
 }
+
+// Verificar si se ha enviado el formulario de modificación y procesarlo
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["idPedidoModificar"])) {
+    // Obtener los datos del formulario
+    $idPedidoModificar = intval($_POST["idPedidoModificar"]);
+    $idProducto = $_POST["idProducto"];
+    $cantidad = $_POST["cantidad"];
+    $total = $_POST["total"];
+    $idCliente = $_POST["idCliente"];
+    $idEmpleado = $_POST["idEmpleado"];
+
+    // Conectar a la base de datos
+    $conexion = conectar();
+
+    // Preparar la consulta de modificación
+    $consultaModificacion = $conexion->prepare("UPDATE Pedidos SET idProducto = ?, Cantidad = ?, Total = ?, idCliente = ?, idEmpleado = ? WHERE idPedido = ?");
+    $consultaModificacion->bind_param('sssssi', $idProducto, $cantidad, $total, $idCliente, $idEmpleado, $idPedidoModificar);
+
+    // Ejecutar la consulta
+    if ($consultaModificacion->execute()) {
+        echo "Pedido modificado exitosamente";
+    } else {
+        echo "Error al modificar el pedido: " . $consultaModificacion->error;
+    }
+
+    // Cerrar la conexión
+    $conexion->close();
+}
 ?>
 
 <!DOCTYPE html>
@@ -49,13 +77,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["idPedidoModificar"])) 
 <body>
     <h1>Modificación de Pedidos</h1>
 
-    <form method="POST" action="procesar_modificacion_pedido.php">
-        <!-- Campos ocultos para enviar el ID del pedido -->
-        <input name="idPedidoModificar" value="<?php echo $idPedidoModificar; ?>">
+    <form method="POST" action="<?php echo $_SERVER["PHP_SELF"]; ?>">
+        <!-- Campo oculto para enviar el ID del pedido -->
+        <input type="hidden" name="idPedidoModificar" value="<?php echo $idPedidoModificar; ?>">
 
         <label for="idProducto">ID del Producto:</label>
         <input type="text" name="idProducto" value="<?php echo $idProducto; ?>" required><br><br>
-        
+
         <label for="cantidad">Cantidad:</label>
         <input type="text" name="cantidad" value="<?php echo $cantidad; ?>" required><br><br>
 
