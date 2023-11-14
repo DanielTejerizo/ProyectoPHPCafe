@@ -16,14 +16,14 @@
 
     <nav class="menu-container">
     <div class="left-menu">
-        <a href="#seccion1"><span>Sección 1</span><i class="fas fa-chevron-right"></i></a>
-        <a href="#seccion2"><span>Sección 2</span><i class="fas fa-chevron-right"></i></a>
-        <a href="#seccion3"><span>Sección 3</span><i class="fas fa-chevron-right"></i></a>
+        <a href="#seccion1"><span>Sección 1</span></a>
+        <a href="#seccion2"><span>Sección 2</span></a>
+        <a href="#seccion3"><span>Sección 3</span></a>
     </div>
     <div class="right-menu">
-        <a href="#seccion1"><span>Sección 1</span><i class="fas fa-chevron-right"></i></a>
-        <a href="#seccion2"><span>Sección 2</span><i class="fas fa-chevron-right"></i></a>
-        <a href="#seccion3"><span>Sección 3</span><i class="fas fa-chevron-right"></i></a>
+        <a href="#seccion1"><span>Sección 1</span></a>
+        <a href="#seccion2"><span>Sección 2</span></a>
+        <a href="#seccion3"><span>Sección 3</span></a>
     </div>
 </nav>
 
