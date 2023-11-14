@@ -5,89 +5,82 @@ SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 
 -- -----------------------------------------------------
+-- Schema mydb
+-- -----------------------------------------------------
+-- -----------------------------------------------------
 -- Schema trabajophp
 -- -----------------------------------------------------
 
 -- -----------------------------------------------------
 -- Schema trabajophp
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `trabajophp` DEFAULT CHARACTER SET utf8 ;
+CREATE SCHEMA IF NOT EXISTS `trabajophp` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci ;
 USE `trabajophp` ;
 
 -- -----------------------------------------------------
--- Table `trabajophp`.`Proveedores`
+-- Table `trabajophp`.`categoria`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `trabajophp`.`Proveedores` (
-  `idProveedor` INT NOT NULL,
-  `NombreProv` VARCHAR(45) NOT NULL,
+CREATE TABLE IF NOT EXISTS `trabajophp`.`categoria` (
+  `idCategoria` INT NOT NULL,
+  `NombreCat` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`idCategoria`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `trabajophp`.`clientes`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `trabajophp`.`clientes` (
+  `idCliente` INT NOT NULL,
+  `NombreCli` VARCHAR(45) NOT NULL,
   `Direccion` VARCHAR(200) NOT NULL,
-  `Telefono` VARCHAR(15) NOT NULL,
-  `PersonaContacto` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`idProveedor`))
-ENGINE = InnoDB;
+  `Telefono` INT NOT NULL,
+  PRIMARY KEY (`idCliente`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
--- Table `trabajophp`.`Empleados`
+-- Table `trabajophp`.`empleados`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `trabajophp`.`Empleados` (
+CREATE TABLE IF NOT EXISTS `trabajophp`.`empleados` (
   `idEmpleado` INT NOT NULL,
   `NombreEmp` VARCHAR(45) NOT NULL,
   `Edad` VARCHAR(45) NOT NULL,
   `FechaContratacion` DATE NOT NULL,
   `NumeroCuenta` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`idEmpleado`))
-ENGINE = InnoDB;
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
--- Table `trabajophp`.`Clientes`
+-- Table `trabajophp`.`proveedores`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `trabajophp`.`Clientes` (
-  `idCliente` INT NOT NULL,
-  `NombreCli` VARCHAR(45) NOT NULL,
+CREATE TABLE IF NOT EXISTS `trabajophp`.`proveedores` (
+  `idProveedor` INT NOT NULL,
+  `NombreProv` VARCHAR(45) NOT NULL,
   `Direccion` VARCHAR(200) NOT NULL,
-  `Telefono` INT NOT NULL,
-  PRIMARY KEY (`idCliente`))
-ENGINE = InnoDB;
+  `Telefono` VARCHAR(15) NOT NULL,
+  `PersonaContacto` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`idProveedor`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
--- Table `trabajophp`.`Usuarios`
+-- Table `trabajophp`.`productos`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `trabajophp`.`Usuarios` (
-  `idUsuario` INT NOT NULL,
-  `Tipo` VARCHAR(45) NOT NULL,
-  `Contrasenia` VARCHAR(200) NOT NULL,
-  `idEmpleado` INT NOT NULL,
-  PRIMARY KEY (`idUsuario`),
-  INDEX `fk_Usuarios_Empleados1_idx` (`idEmpleado` ASC) VISIBLE,
-  CONSTRAINT `fk_Usuarios_Empleados1`
-    FOREIGN KEY (`idEmpleado`)
-    REFERENCES `trabajophp`.`Empleados` (`idEmpleado`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `trabajophp`.`Categoria`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `trabajophp`.`Categoria` (
-  `idCategoria` INT NOT NULL,
-  `NombreCat` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`idCategoria`))
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `trabajophp`.`Productos`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `trabajophp`.`Productos` (
+CREATE TABLE IF NOT EXISTS `trabajophp`.`productos` (
   `idProducto` INT NOT NULL,
   `NombreProd` VARCHAR(45) NOT NULL,
-  `Precio` DECIMAL NOT NULL,
-  `Stock` INT NULL,
+  `Precio` DECIMAL(10,0) NOT NULL,
+  `Stock` INT NULL DEFAULT NULL,
   `IdCategoria` INT NOT NULL,
   `idProveedor` INT NOT NULL,
   PRIMARY KEY (`idProducto`),
@@ -95,21 +88,19 @@ CREATE TABLE IF NOT EXISTS `trabajophp`.`Productos` (
   INDEX `fk_Productos_Proveedores1_idx` (`idProveedor` ASC) VISIBLE,
   CONSTRAINT `fk_Productos_Categoria`
     FOREIGN KEY (`IdCategoria`)
-    REFERENCES `trabajophp`.`Categoria` (`idCategoria`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    REFERENCES `trabajophp`.`categoria` (`idCategoria`),
   CONSTRAINT `fk_Productos_Proveedores1`
     FOREIGN KEY (`idProveedor`)
-    REFERENCES `trabajophp`.`Proveedores` (`idProveedor`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+    REFERENCES `trabajophp`.`proveedores` (`idProveedor`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
--- Table `trabajophp`.`Pedidos`
+-- Table `trabajophp`.`pedidos`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `trabajophp`.`Pedidos` (
+CREATE TABLE IF NOT EXISTS `trabajophp`.`pedidos` (
   `idPedido` INT NOT NULL,
   `idProducto` INT NOT NULL,
   `Cantidad` INT NOT NULL,
@@ -122,20 +113,29 @@ CREATE TABLE IF NOT EXISTS `trabajophp`.`Pedidos` (
   INDEX `fk_Pedidos_Empleados1_idx` (`idEmpleado` ASC) VISIBLE,
   CONSTRAINT `fk_Pedidos_Clientes1`
     FOREIGN KEY (`idCliente`)
-    REFERENCES `trabajophp`.`Clientes` (`idCliente`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Pedidos_Productos1`
-    FOREIGN KEY (`idProducto`)
-    REFERENCES `trabajophp`.`Productos` (`idProducto`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    REFERENCES `trabajophp`.`clientes` (`idCliente`),
   CONSTRAINT `fk_Pedidos_Empleados1`
     FOREIGN KEY (`idEmpleado`)
-    REFERENCES `trabajophp`.`Empleados` (`idEmpleado`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+    REFERENCES `trabajophp`.`empleados` (`idEmpleado`),
+  CONSTRAINT `fk_Pedidos_Productos1`
+    FOREIGN KEY (`idProducto`)
+    REFERENCES `trabajophp`.`productos` (`idProducto`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `trabajophp`.`usuarios`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `trabajophp`.`usuarios` (
+  `idUsuario` INT NOT NULL,
+  `Tipo` VARCHAR(45) NOT NULL,
+  `Contrasenia` VARCHAR(200) NOT NULL,
+  PRIMARY KEY (`idUsuario`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
 
 
 SET SQL_MODE=@OLD_SQL_MODE;
