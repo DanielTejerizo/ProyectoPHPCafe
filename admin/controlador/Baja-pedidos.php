@@ -2,27 +2,32 @@
 include('../../conexion.php');
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["idPedidoBaja"])) {
-    // Obtener el ID del pedido a dar de baja
-    $idPedidoBaja = isset($_POST["idPedidoBaja"]) ? $_POST["idPedidoBaja"] : null;
+    // Verificar si se ha enviado el formulario y si está definido el campo idPedidoBaja
+    if (isset($_POST["idPedidoBaja"])) {
+        // Obtener el ID del pedido a dar de baja
+        $idPedidoBaja = intval($_POST["idPedidoBaja"]);
 
-    // Conectar a la base de datos
-    $conexion = conectar();
+        // Conectar a la base de datos
+        $conexion = conectar();
 
-    // Preparar la consulta de eliminación
-    $secuenciaBaja = $conexion->prepare("DELETE FROM Pedidos WHERE idPedido = ?");
+        // Preparar la consulta de eliminación
+        $secuenciaBaja = $conexion->prepare("DELETE FROM Pedidos WHERE idPedido = ?");
 
-    // Corregir la línea de bind_param
-    $secuenciaBaja->bind_param('i', $idPedidoBaja);
+        // Corregir la línea de bind_param
+        $secuenciaBaja->bind_param('i', $idPedidoBaja);
 
-    // Ejecutar la consulta
-    if ($secuenciaBaja->execute()) {
-        echo "Pedido dado de baja exitosamente";
+        // Ejecutar la consulta
+        if ($secuenciaBaja->execute()) {
+            echo "Pedido dado de baja exitosamente";
+        } else {
+            echo "Error al dar de baja el pedido: " . $secuenciaBaja->error;
+        }
+
+        // Cerrar la conexión
+        $conexion->close();
     } else {
-        echo "Error al dar de baja el pedido: " . $secuenciaBaja->error;
+        echo "ID del pedido no definido.";
     }
-
-    // Cerrar la conexión
-    $conexion->close();
 }
 ?>
 
