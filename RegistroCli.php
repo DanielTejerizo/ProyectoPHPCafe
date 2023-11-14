@@ -24,7 +24,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["id"])) {
         }
 
         $consulta = $conexion->prepare("INSERT INTO usuarios (NombreUsuario, Tipo, Contrasenia) VALUES (?, ?, ?)");
-        $tipo = "Cliente"; // O el tipo que desees asignar
+        $tipo = "Cliente";
 
         $consulta->bind_param("sss", $idUsuario, $tipo, $hashContrasena);
 
