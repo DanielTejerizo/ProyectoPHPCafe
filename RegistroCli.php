@@ -20,7 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         $consulta = $conexion->prepare("INSERT INTO Usuarios (idUsuario, Tipo, Contrasenia) VALUES (?, ?, ?)");
-        $tipo = "Estandar"; // O el tipo que desees asignar
+        $tipo = "Cliente"; // O el tipo que desees asignar
 
         $consulta->bind_param("iss", $idUser, $tipo, $hashContrasena);
 
