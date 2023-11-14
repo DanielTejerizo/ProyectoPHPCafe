@@ -5,7 +5,7 @@ include('conexion.php');
 $mensajeError = "";
 
 // Verificar si se envió el formulario
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["id"])) {
     // Limpiar y recoger datos del formulario
     $idUsuario = limpiarDatos($_POST["idUsuario"]);
     $contrasena = limpiarDatos($_POST["contrasena"]);
@@ -89,6 +89,11 @@ function limpiarDatos($datos) {
             <input type="password" name="contrasena" required><br>
 
             <button type="submit">Iniciar Sesión</button>
+        </form>
+
+        <form method="post" action="registroCli.php">
+
+            <button type="submit">No tienes cuenta? Crea una!</button>
         </form>
     </div>
 </body>

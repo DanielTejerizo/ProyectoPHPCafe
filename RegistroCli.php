@@ -2,7 +2,7 @@
 include('conexion.php');
 
 // Verificar si se envió el formulario
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["id"])) {
     // Recoger datos del formulario
     $idUser = htmlspecialchars($_POST["id"]);
     $contrasena = $_POST["contrasena"];
@@ -69,6 +69,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <input type="password" name="contrasena" required><br>
 
             <button type="submit">Registrarse</button>
+        </form>
+
+        <form method="post" action="LoginCli.php">
+
+            <button type="submit">Inicar sesion</button>
         </form>
     </div>
 </body>
