@@ -3,7 +3,6 @@ include('../../conexion.php');
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["idPedidoBaja"])) {
     // Verificar si se ha enviado el formulario y si está definido el campo idPedidoBaja
-    if (isset($_POST["idPedidoBaja"])) {
         // Obtener el ID del pedido a dar de baja
         $idPedidoBaja = intval($_POST["idPedidoBaja"]);
 
