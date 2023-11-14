@@ -1,10 +1,9 @@
 <?php
 include('../../conexion.php');
 
-// Verificar si se ha enviado el formulario
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["idPedidoBaja"])) {
     // Obtener el ID del pedido a dar de baja
-    $idPedidoBaja = $_POST["idPedidoBaja"];
+    $idPedidoBaja = isset($_POST["idPedidoBaja"]) ? $_POST["idPedidoBaja"] : null;
 
     // Conectar a la base de datos
     $conexion = conectar();
@@ -32,7 +31,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["idPedidoBaja"])) {
 
 <head>
     <title>Baja de Pedidos</title>
-    <link rel="stylesheet" href="../css/Alta.css">
+    <link rel="stylesheet" href="../../Css/Alta.css">
 </head>
 
 <body>
@@ -87,7 +86,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["idPedidoBaja"])) {
     </div>
 
     <!-- Formularios para otras operaciones (Modificación, Alta, etc.) -->
-    <form action="Alta-pedidos.php" method="post">
+    <form action="../Alta-pedidos.php" method="post">
         <button type="submit">Alta</button>
     </form>
 
