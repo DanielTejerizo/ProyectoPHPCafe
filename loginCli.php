@@ -7,7 +7,7 @@ $mensajeError = "";
 // Verificar si se envió el formulario
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["idUsuario"])) {
     // Limpiar y recoger datos del formulario
-    $idUsuario = limpiarDatos($_POST["idUsuario"]); // Cambiado de "Nombreusuario" a "idUsuario"
+    $idUsuario = limpiarDatos($_POST["idUsuario"]);
     $contrasena = limpiarDatos($_POST["contrasena"]);
 
     $conexion = conectar();
@@ -17,21 +17,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["idUsuario"])) {
     }
 
     // Consulta para obtener la contraseña almacenada
-    $consulta = $conexion->prepare("SELECT idUsuario, Contrasenia, Tipo FROM Usuarios WHERE idUsuario = ?");
+    $consulta = $conexion->prepare("SELECT NombreUsuario, Contrasenia, Tipo FROM usuarios WHERE NombreUsuario = ?");
     $consulta->bind_param("s", $idUsuario);
 
     if ($consulta->execute()) {
         $consulta->store_result();
 
         if ($consulta->num_rows == 1) {
-            $consulta->bind_result($idUsuario, $hashContrasena, $tipoUsuario);
+            $consulta->bind_result($nombreUsuario, $hashContrasena, $tipoUsuario);
             $consulta->fetch();
 
             // Verificar la contraseña
             if (password_verify($contrasena, $hashContrasena)) {
                 // Inicio de sesión exitoso
                 session_start();
-                $_SESSION['idUsuario'] = $idUsuario;
+                $_SESSION['nombreUsuario'] = $nombreUsuario;
                 $_SESSION['tipoUsuario'] = $tipoUsuario;
 
                 // Regenerar el ID de sesión para evitar ataques de secuestro de sesión
@@ -44,7 +44,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["idUsuario"])) {
                 $mensajeError = "La contraseña es incorrecta.";
             }
         } else {
-            $mensajeError = "ID de usuario no encontrado.";
+            $mensajeError = "Nombre de usuario no encontrado.";
         }
     } else {
         // Log de errores en lugar de mostrar al usuario
@@ -82,7 +82,7 @@ function limpiarDatos($datos) {
         ?>
 
         <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
-            <label for="idUsuario">ID de Usuario:</label>
+            <label for="idUsuario">Nombre de Usuario:</label>
             <input type="text" name="idUsuario" required><br>
 
             <label for="contrasena">Contraseña:</label>
