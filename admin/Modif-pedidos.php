@@ -1,34 +1,40 @@
 <?php
 include('../conexion.php');
 
-// Verificar si se ha enviado el formulario
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["idPedido"])) {
+// Verificar si se ha enviado el formulario de modificación
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["idPedidoModificar"])) {
     // Obtener el ID del pedido a modificar
-    $idPedido = $_POST["idPedido"];
+    $idPedidoModificar = intval($_POST["idPedidoModificar"]);
 
     // Conectar a la base de datos
     $conexion = conectar();
 
-    // Obtener los detalles del pedido actual
-    $consulta_pedido = $conexion->prepare("SELECT * FROM Pedidos WHERE idPedido = ?");
-    $consulta_pedido->bind_param('i', $idPedido);
-    $consulta_pedido->execute();
-    $resultado_pedido = $consulta_pedido->get_result();
+    // Consultar la información del pedido
+    $consultaPedido = $conexion->prepare("SELECT idPedido, idProducto, Cantidad, Total, idCliente, idEmpleado FROM Pedidos WHERE idPedido = ?");
+    $consultaPedido->bind_param('i', $idPedidoModificar);
 
-    // Verificar si hay resultados
-    if ($resultado_pedido->num_rows > 0) {
-        $pedido = $resultado_pedido->fetch_assoc();
+    if ($consultaPedido->execute()) {
+        $consultaPedido->store_result();
+
+        if ($consultaPedido->num_rows == 1) {
+            // Obtener los datos del pedido
+            $consultaPedido->bind_result($idPedido, $idProducto, $cantidad, $total, $idCliente, $idEmpleado);
+            $consultaPedido->fetch();
+        } else {
+            echo "ID de pedido no encontrado.";
+            exit();
+        }
     } else {
-        echo "Pedido no encontrado.";
-        exit;
+        echo "Error al consultar el pedido: " . $consultaPedido->error;
+        exit();
     }
-
-    // Consultar opciones para claves foráneas (Clientes y Empleados)
-    $consulta_clientes = $conexion->query("SELECT idCliente, NombreCliente FROM Clientes");
-    $consulta_empleados = $conexion->query("SELECT idEmpleado, NombreEmpleado FROM Empleados");
 
     // Cerrar la conexión
     $conexion->close();
+} else {
+    // Si no se ha enviado el formulario, mostrar un mensaje de advertencia
+    echo "ID del pedido a modificar no definido.";
+    exit();
 }
 ?>
 
@@ -37,63 +43,33 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["idPedido"])) {
 
 <head>
     <title>Modificación de Pedidos</title>
-    <link rel="stylesheet" href="../css/Alta.css">
-    <script>
-        function mostrarAlertaModificacion(mensaje) {
-            alert(mensaje);
-        }
-    </script>
+    <link rel="stylesheet" href="../../Css/Alta.css">
 </head>
 
 <body>
     <h1>Modificación de Pedidos</h1>
 
-    <form method="POST" action="<?php echo $_SERVER["PHP_SELF"]; ?>">
-        <input type="hidden" name="idPedido" value="<?php echo $pedido['idPedido']; ?>">
-        <label for="nuevaCantidad">Nueva Cantidad:</label>
-        <input type="text" name="nuevaCantidad" id="nuevaCantidad" value="<?php echo $pedido['Cantidad']; ?>" required><br><br>
-        <label for="nuevoTotal">Nuevo Total:</label>
-        <input type="text" name="nuevoTotal" id="nuevoTotal" value="<?php echo $pedido['Total']; ?>" required><br><br>
-        <label for="nuevoIdCliente">Nuevo Cliente:</label>
-        <select name="nuevoIdCliente" id="nuevoIdCliente" required>
-            <?php
-            while ($cliente = $consulta_clientes->fetch_assoc()) {
-                echo "<option value='{$cliente['idCliente']}'";
-                if ($pedido['idCliente'] == $cliente['idCliente']) {
-                    echo " selected";
-                }
-                echo ">{$cliente['NombreCliente']}</option>";
-            }
-            ?>
-        </select><br><br>
-        <label for="nuevoIdEmpleado">Nuevo Empleado:</label>
-        <select name="nuevoIdEmpleado" id="nuevoIdEmpleado" required>
-            <?php
-            while ($empleado = $consulta_empleados->fetch_assoc()) {
-                echo "<option value='{$empleado['idEmpleado']}'";
-                if ($pedido['idEmpleado'] == $empleado['idEmpleado']) {
-                    echo " selected";
-                }
-                echo ">{$empleado['NombreEmpleado']}</option>";
-            }
-            ?>
-        </select><br><br>
+    <form method="POST" action="procesar_modificacion_pedido.php">
+        <!-- Campos ocultos para enviar el ID del pedido -->
+        <input name="idPedidoModificar" value="<?php echo $idPedidoModificar; ?>">
+
+        <label for="idProducto">ID del Producto:</label>
+        <input type="text" name="idProducto" value="<?php echo $idProducto; ?>" required><br><br>
+        
+        <label for="cantidad">Cantidad:</label>
+        <input type="text" name="cantidad" value="<?php echo $cantidad; ?>" required><br><br>
+
+        <label for="total">Total:</label>
+        <input type="text" name="total" value="<?php echo $total; ?>" required><br><br>
+
+        <label for="idCliente">ID del Cliente:</label>
+        <input type="text" name="idCliente" value="<?php echo $idCliente; ?>" required><br><br>
+
+        <label for="idEmpleado">ID del Empleado:</label>
+        <input type="text" name="idEmpleado" value="<?php echo $idEmpleado; ?>" required><br><br>
+
         <button type="submit">Confirmar Modificación</button>
     </form>
-
-    <!-- Puedes agregar una sección para mostrar detalles del pedido actual después de la modificación -->
-
-    <div>
-        <h2>Detalles del Pedido Actual</h2>
-        <p>ID Pedido: <?php echo $pedido['idPedido']; ?></p>
-        <p>Cantidad: <?php echo $pedido['Cantidad']; ?></p>
-        <p>Total: <?php echo $pedido['Total']; ?></p>
-        <p>ID Cliente: <?php echo $pedido['idCliente']; ?></p>
-        <p>ID Empleado: <?php echo $pedido['idEmpleado']; ?></p>
-    </div>
-
-    <!-- Puedes agregar enlaces o botones para regresar a otras operaciones (Alta, Baja, etc.) -->
-
 </body>
 
 </html>
