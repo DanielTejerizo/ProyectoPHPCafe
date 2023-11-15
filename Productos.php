@@ -13,7 +13,10 @@
       <p>Categoria: Americano</p>
       <p>Es un café tradicionalmente americano molido y fino</p>
       <p>Precio: $5.99</p>
-      <button class="boton" type="submit">Comprar ahora</button>
+      <form method="post" action="agregar_al_carrito.php">
+          <input type="hidden" name="idProducto" value="1">
+          <button class="boton" type="submit">Comprar ahora</button>
+      </form>
     </div>
     <div class="product">
       <img src="./Img/Café Cold Brew.jpg" alt="Producto 2" height="170" width="170">
@@ -81,4 +84,5 @@
     </div>
   </div>
 </body>
+
 </html>
