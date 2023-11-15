@@ -64,6 +64,12 @@ p{
     padding: 1em;
 }
 
+.menu-container .left-menu {
+    margin-top: 20px; /* Puedes ajustar el valor según tus necesidades */
+    display: flex;
+    align-items: center;
+}
+
 .menu-container .left-menu a {
     color: #fff;
     text-decoration: none;
@@ -94,3 +100,4 @@ p{
 .menu-container .right-menu a:hover {
     background-color: #444;
 }
+
