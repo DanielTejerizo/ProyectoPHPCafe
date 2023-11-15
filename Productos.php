@@ -16,10 +16,12 @@
       <p>Es un café tradicionalmente americano molido y fino</p>
       <p>Precio: $5.99</p>
       <form method="post" action="carrito.php">
-        <input type="hidden" name="action" value="add">
-        <input type="hidden" name="idProducto" value="1"> <!-- Cambia el valor del idProducto para cada producto -->
+        <input type="hidden" name="idProducto" value="1">
+        <label for="cantidad">Cantidad:</label>
+        <input type="number" name="cantidad" id="cantidad" value="1" min="1"><br><br>
         <button class="boton" type="submit">Comprar ahora</button>
       </form>
+    </div>
 
     </div>
     <div class="product">
@@ -28,7 +30,12 @@
       <p>Categoria: Americano</p>
       <p>Es un café tradicionalmente americano infusionado y frio</p>
       <p>Precio: $5.99</p>
-      <button class="boton" type="submit">Comprar ahora</button>
+      <form method="post" action="carrito.php">
+        <input type="hidden" name="idProducto" value="1">
+        <label for="cantidad">Cantidad:</label>
+        <input type="number" name="cantidad" id="cantidad" value="1" min="1"><br><br>
+        <button class="boton" type="submit">Comprar ahora</button>
+      </form>
     </div>
     <div class="product">
       <img src="./Img/CafePuerto.jpg" alt="Producto 3" height="170" width="170">
@@ -36,7 +43,12 @@
       <p>Categoria: Puertorriqueño</p>
       <p>Es un café tradicionalmente puertorriqueño</p>
       <p>Precio: $5.99</p>
-      <button class="boton" type="submit">Comprar ahora</button>
+      <form method="post" action="carrito.php">
+        <input type="hidden" name="idProducto" value="1">
+        <label for="cantidad">Cantidad:</label>
+        <input type="number" name="cantidad" id="cantidad" value="1" min="1"><br><br>
+        <button class="boton" type="submit">Comprar ahora</button>
+      </form>
     </div>
     <div class="product">
       <img src="./Img/CafeAmericano.png" alt="Producto 1">
