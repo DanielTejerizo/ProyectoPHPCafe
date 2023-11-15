@@ -21,9 +21,7 @@
         <a href="#seccion3"><span>Sección 3</span></a>
     </div>
     <div class="right-menu">
-        <a href="#seccion1"><img src="user-solid.svg" alt="IconUser"></a>
-        <a href="#seccion2"><span>Sección 2</span></a>
-        <a href="#seccion3"><span>Sección 3</span></a>
+        <a href="loginCli.php"><img src="img/user-solid.png" alt="IconUser" width="30" height="30"></a>
     </div>
 </nav>
 
