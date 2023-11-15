@@ -1,11 +1,9 @@
 <!DOCTYPE html>
 <html>
-
 <head>
   <title>Página de Productos</title>
   <link rel="stylesheet" type="text/css" href="css/Productos.css">
 </head>
-
 <body>
   <h1>Productos</h1>
   <div class="product-container">
@@ -15,14 +13,7 @@
       <p>Categoria: Americano</p>
       <p>Es un café tradicionalmente americano molido y fino</p>
       <p>Precio: $5.99</p>
-      <form method="post" action="carrito.php">
-        <input type="hidden" name="idProducto" value="1">
-        <label for="cantidad">Cantidad:</label>
-        <input type="number" name="cantidad" id="cantidad" value="1" min="1"><br><br>
-        <button class="boton" type="submit">Comprar ahora</button>
-      </form>
-    </div>
-
+      <button class="boton" type="submit">Comprar ahora</button>
     </div>
     <div class="product">
       <img src="./Img/Café Cold Brew.jpg" alt="Producto 2" height="170" width="170">
@@ -30,12 +21,7 @@
       <p>Categoria: Americano</p>
       <p>Es un café tradicionalmente americano infusionado y frio</p>
       <p>Precio: $5.99</p>
-      <form method="post" action="carrito.php">
-        <input type="hidden" name="idProducto" value="1">
-        <label for="cantidad">Cantidad:</label>
-        <input type="number" name="cantidad" id="cantidad" value="1" min="1"><br><br>
-        <button class="boton" type="submit">Comprar ahora</button>
-      </form>
+      <button class="boton" type="submit">Comprar ahora</button>
     </div>
     <div class="product">
       <img src="./Img/CafePuerto.jpg" alt="Producto 3" height="170" width="170">
@@ -43,12 +29,7 @@
       <p>Categoria: Puertorriqueño</p>
       <p>Es un café tradicionalmente puertorriqueño</p>
       <p>Precio: $5.99</p>
-      <form method="post" action="carrito.php">
-        <input type="hidden" name="idProducto" value="1">
-        <label for="cantidad">Cantidad:</label>
-        <input type="number" name="cantidad" id="cantidad" value="1" min="1"><br><br>
-        <button class="boton" type="submit">Comprar ahora</button>
-      </form>
+      <button class="boton" type="submit">Comprar ahora</button>
     </div>
     <div class="product">
       <img src="./Img/CafeAmericano.png" alt="Producto 1">
@@ -100,5 +81,4 @@
     </div>
   </div>
 </body>
-
 </html>
