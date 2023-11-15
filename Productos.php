@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <title>Página de Productos</title>
   <link rel="stylesheet" type="text/css" href="css/Productos.css">
 </head>
+
 <body>
   <h1>Productos</h1>
   <div class="product-container">
@@ -13,10 +15,12 @@
       <p>Categoria: Americano</p>
       <p>Es un café tradicionalmente americano molido y fino</p>
       <p>Precio: $5.99</p>
-      <form method="post" action="agregar_al_carrito.php">
-          <input type="hidden" name="idProducto" value="1">
-          <button class="boton" type="submit">Comprar ahora</button>
+      <form method="post" action="carrito.php">
+        <input type="hidden" name="action" value="add">
+        <input type="hidden" name="idProducto" value="1"> <!-- Cambia el valor del idProducto para cada producto -->
+        <button class="boton" type="submit">Comprar ahora</button>
       </form>
+
     </div>
     <div class="product">
       <img src="./Img/Café Cold Brew.jpg" alt="Producto 2" height="170" width="170">
