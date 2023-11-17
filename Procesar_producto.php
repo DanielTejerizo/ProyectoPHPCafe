@@ -1,38 +1,48 @@
 <?php
+// Incluir la clase de conexión
 include('conexion.php');
 
-$conexion = conectar();
+// Verificar si se ha enviado el formulario
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["comprar_producto"])) {
+    // Obtener el valor de h2 (Nombre del Producto)
+    $nombreProducto = $_POST["comprar_producto"];
 
-// Verifica la conexión
-if ($conexion->connect_error) {
-    die("Conexión fallida: " . $conexion->connect_error);
-}
+    // Obtener la conexión
+    $conexion = conectar();
 
-if (isset($_POST['comprar'])) {
-    $idProducto = $_POST['comprar'];
-    $cantidad = 1;
-    $total = 5.99;
-    $idCliente = 1;
-    $idEmpleado = 1;
+    // Consulta para obtener el id del producto
+    $sql = "SELECT idProducto FROM productos WHERE NombreProd = '$nombreProducto'";
+    $resultado = $conexion->query($sql);
 
-    // Utiliza sentencias preparadas para prevenir inyección de SQL
-    $sql = "INSERT INTO pedidos (idProducto, Cantidad, Total, idCliente, idEmpleado) VALUES (?, ?, ?, ?, ?)";
-    $stmt = $conexion->prepare($sql);
+    // Verificar si la consulta fue exitosa
+    if ($resultado) {
+        // Obtener el id del producto
+        $fila = $resultado->fetch_assoc();
+        $idProducto = $fila["idProducto"];
 
-    // Vincula los parámetros
-    $stmt->bind_param("iiidi", $idProducto, $cantidad, $total, $idCliente, $idEmpleado);
+        // Ahora, puedes insertar en la tabla de pedidos
+        // (Asegúrate de tener el idCliente e idEmpleado adecuados)
+        $cantidad = $_POST["cantidad_producto1"];
+        $total = 5.99 * $cantidad; // Precio del producto multiplicado por la cantidad
+        $idCliente = 1; // Reemplaza con el id del cliente real
+        $idEmpleado = 1; // Reemplaza con el id del empleado real
 
-    if ($stmt->execute()) {
-        echo "¡Pedido realizado exitosamente!";
+        // Realizar la inserción en la tabla de pedidos
+        $sqlInsert = "INSERT INTO pedidos (idPedido, idProducto, Cantidad, Total, idCliente, idEmpleado) 
+              VALUES (NULL, $idProducto, $cantidad, $total, $idCliente, $idEmpleado)";
+
+        if ($conexion->query($sqlInsert) === TRUE) {
+            echo "Pedido realizado con éxito";
+        } else {
+            echo "Error al realizar el pedido: " . $conexion->error;
+        }
+
+        // Cerrar la conexión
+        $conexion->close();
     } else {
-        echo "Error: " . $stmt->error;
+        echo "Error al obtener el id del producto: " . $conexion->error;
     }
-
-    // Cierra la sentencia preparada
-    $stmt->close();
+} else {
+    echo "No se ha enviado el formulario correctamente.";
 }
-
-// Cierra la conexión
-$conexion->close();
 ?>
-

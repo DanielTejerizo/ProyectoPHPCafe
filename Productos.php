@@ -18,7 +18,7 @@
         <p>Precio: $5.99</p>
         <label for="cantidad_producto1">Cantidad:</label>
         <input type="number" id="cantidad_producto1" name="cantidad_producto1" value="1" min="1"><br><br>
-        <button class="boton" type="submit">Comprar ahora</button>
+        <button class="boton" type="submit" name="comprar_producto" value="Café Molido Fino">Comprar ahora</button>
       </div>
       <div class="product">
         <img src="./Img/Café Cold Brew.jpg" alt="Producto 2" height="170" width="170">
