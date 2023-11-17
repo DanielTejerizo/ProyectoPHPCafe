@@ -102,6 +102,8 @@
       </div>
     </div>
   </form>
+
+  <form action="Pedidos.php" method></form>
 </body>
 
 </html>
