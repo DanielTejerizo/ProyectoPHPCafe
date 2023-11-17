@@ -22,14 +22,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["comprar_producto"])) {
 
         // Obtener otros valores del formulario
         $cantidad = $_POST["cantidad_producto1"];
-        $total = 5.99 * (float) $cantidad;
+        (float) $total = 5.99 * (float)  $cantidad;
         $idCliente = 1; // Reemplaza con el id del cliente real
         $idEmpleado = 1; // Reemplaza con el id del empleado real
         $idPedido = $_POST["id_pedido"]; // Nuevo campo agregado al formulario
 
         // Realizar la inserción en la tabla de pedidos
         $sqlInsert = "INSERT INTO pedidos (idPedido, idProducto, Cantidad, Total, idCliente, idEmpleado) 
-                      VALUES ('$idPedido', $idProducto, $cantidad, '$total', $idCliente, $idEmpleado)";
+                      VALUES ('$idPedido', '$idProducto', $cantidad, '$total', '$idCliente', '$idEmpleado')";
 
         // Manejar errores de consulta
         if ($conexion->query($sqlInsert) === TRUE) {

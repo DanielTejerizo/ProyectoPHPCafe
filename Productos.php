@@ -16,7 +16,7 @@
         <p>Categoria: Americano</p>
         <p>Es un café tradicionalmente americano molido y fino</p>
         <label for="id_pedido">ID Pedido:</label>
-        <input type="text" id="id_pedido" name="id_pedido"><br><br>
+        <input type="number" id="id_pedido" name="id_pedido"><br><br>
         <p>Precio: $5.99</p>
         <label for="cantidad_producto1">Cantidad:</label>
         <input type="number" id="cantidad_producto1" name="cantidad_producto1" min="1"><br><br>
