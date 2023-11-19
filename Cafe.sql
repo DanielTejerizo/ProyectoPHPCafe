@@ -33,7 +33,7 @@ COLLATE = utf8mb4_0900_ai_ci;
 -- Table `trabajophp`.`clientes`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `trabajophp`.`clientes` (
-  `idCliente` INT NOT NULL,
+  `idCliente` VARCHAR(45) NOT NULL,
   `NombreCli` VARCHAR(45) NOT NULL,
   `Direccion` VARCHAR(200) NOT NULL,
   `Telefono` INT NOT NULL,
@@ -105,7 +105,7 @@ CREATE TABLE IF NOT EXISTS `trabajophp`.`pedidos` (
   `idProducto` INT NOT NULL,
   `Cantidad` INT NOT NULL,
   `Total` VARCHAR(45) NOT NULL,
-  `idCliente` INT NOT NULL,
+  `idCliente` VARCHAR(45) NOT NULL,
   `idEmpleado` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`idPedido`),
   INDEX `fk_Pedidos_Clientes1_idx` (`idCliente` ASC) VISIBLE,
@@ -168,7 +168,7 @@ INSERT INTO categoria (idCategoria, NombreCat) value ("1", "Café Americano"),("
 
 /*Clientes*/
 
-INSERT INTO clientes (idCliente, NombreCli, Direccion, Telefono) value ("1", "Teresa Roman García", "C/ Guardia Civil, nº 3, 2º B", "665445588"),("2", "Diego Velez Muñoz", "C/ Golfo de Salónica, nº 40, 5º A", "983251421"), ("3", "Guatavo Garcia Pimienta", "C/ Oviedo, nº 3, 1º A", "983256655"), ("4", "Marta Fernandez Asís", "C/ Santa María de la Cabeza, nº 20, 3º F", "983114477"), ("5", "María de la Enseñanza Rodriguez", "C/ Laurel, nº 4, Bº B", "654587799");
+INSERT INTO clientes (idCliente, NombreCli, Direccion, Telefono) value ("CL1", "Teresa Roman García", "C/ Guardia Civil, nº 3, 2º B", "665445588"),("CL2", "Diego Velez Muñoz", "C/ Golfo de Salónica, nº 40, 5º A", "983251421"), ("CL3", "Guatavo Garcia Pimienta", "C/ Oviedo, nº 3, 1º A", "983256655"), ("CL4", "Marta Fernandez Asís", "C/ Santa María de la Cabeza, nº 20, 3º F", "983114477"), ("CL5", "María de la Enseñanza Rodriguez", "C/ Laurel, nº 4, Bº B", "654587799");
 
 /*Empleados*/
 
