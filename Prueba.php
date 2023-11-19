@@ -10,15 +10,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         die("Error de conexión: " . $conn->connect_error);
     }
 
-    // Obtener el ID del producto seleccionado y la cantidad
+    // Obtener el ID del producto seleccionado, la cantidad, el ID del cliente y generar un número de pedido y empleado aleatorios
     $idProductoSeleccionado = $_POST['producto'];
     $cantidad = $_POST['cantidad'];
-
-    // Generar un número de pedido aleatorio
+    $idCliente = $_POST['cliente'];
     $numeroPedido = rand(1000, 9999);
+    $numeroEmpleado = rand(100, 999);
 
-    // Puedes realizar alguna acción con el ID del producto, la cantidad y el número de pedido, como agregarlos a una tabla de pedidos
-    echo "Pedido realizado para el producto con ID: " . $idProductoSeleccionado . ", Cantidad: " . $cantidad . ", Número de Pedido: " . $numeroPedido;
+    // Puedes realizar alguna acción con el ID del producto, la cantidad, el ID del cliente, el número de pedido y el número de empleado, como agregarlos a una tabla de pedidos
+    echo "Pedido realizado para el producto con ID: " . $idProductoSeleccionado . ", Cantidad: " . $cantidad . ", ID del Cliente: " . $idCliente . ", Número de Pedido: " . $numeroPedido . ", Número de Empleado: " . $numeroEmpleado;
 
     // Cerrar la conexión
     $conn->close();
@@ -55,6 +55,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     echo "<select name='producto'>";
     while($row = $result->fetch_assoc()) {
         echo "<option value='" . $row['idProducto'] . "'>" . $row['NombreProd'] . "</option>";
+    }
+    echo "</select>";
+
+    // Consulta para obtener clientes
+    $sqlClientes = "SELECT idCliente, NombreCli FROM clientes";
+    $resultClientes = $conn->query($sqlClientes);
+
+    // Crear un menú desplegable con los clientes
+    echo "<br><br>Selecciona un cliente: ";
+    echo "<select name='cliente'>";
+    while($rowCliente = $resultClientes->fetch_assoc()) {
+        echo "<option value='" . $rowCliente['idCliente'] . "'>" . $rowCliente['NombreCli'] . "</option>";
     }
     echo "</select>";
 
