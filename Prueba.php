@@ -15,6 +15,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $cantidad = $_POST['cantidad'];
     $idCliente = $_POST['cliente'];
     $numeroPedido = rand(1000, 9999);
+    $idPedido = rand(10000, 99999); // Nuevo idPedido aleatorio
 
     // Obtener aleatoriamente un ID de empleado de la tabla de usuarios
     $sqlEmpleados = "SELECT NombreUsuario FROM usuarios WHERE Tipo = 'Empleado'";
@@ -40,11 +41,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Calcular el total
             $total = $cantidad * $precioProducto;
 
-            // Inserción en la tabla de pedidos
-            $sqlInsertarPedido = "INSERT INTO pedidos (idProducto, idCliente, idEmpleado, Cantidad, Total, NumeroPedido) VALUES ('$idProductoSeleccionado', '$idCliente', '$idEmpleado', '$cantidad', '$total', '$numeroPedido')";
+            // Inserción en la tabla de pedidos con idPedido aleatorio
+            $sqlInsertarPedido = "INSERT INTO pedidos (idPedido, idProducto, Cantidad, Total, idCliente, idEmpleado) VALUES ('$idPedido', '$idProductoSeleccionado', '$cantidad', '$total', '$idCliente', '$idEmpleado')";
+
 
             if ($conn->query($sqlInsertarPedido) === TRUE) {
-                echo "Pedido registrado correctamente. Número de Pedido: " . $numeroPedido;
+                echo "Pedido registrado correctamente. Número de Pedido: " . $numeroPedido . ", ID de Pedido: " . $idPedido;
             } else {
                 echo "Error al registrar el pedido: " . $conn->error;
             }
