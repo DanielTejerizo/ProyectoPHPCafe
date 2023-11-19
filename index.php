@@ -16,9 +16,9 @@
 
     <nav class="menu-container">
     <div class="left-menu">
-        <a href="#seccion1"><span>Sección 1</span></a>
+        <a href="Productos.php"><span>Productos</span></a>
         <a href="#seccion2"><span>Sección 2</span></a>
-        <a href="#seccion3"><span>Sección 3</span></a>
+        <a href="Nosotros.php"><span>A cerca de nosotros</span></a>
     </div>
     <div class="right-menu">
         <a href="Login.php"><img src="img/user-solid.png" alt="IconUser" width="20" height="20"></a>
