@@ -1,20 +1,17 @@
 <?php
 include('conexion.php');
 
-// Inicializar mensajes
 $mensajeExito = "";
 $mensajeError = "";
 
-// Verificar si se envió el formulario
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["id"])) {
-    // Recoger datos del formulario
     $idUsuario = htmlspecialchars($_POST["id"]);
     $contrasena = $_POST["contrasena"];
+    $tipoUsuario = $_POST["tipo"]; // Nuevo campo para el tipo de usuario
 
     if (strlen($contrasena) < 8) {
         $mensajeError = "La contraseña debe tener al menos 8 caracteres.";
     } else {
-        // Encriptar la contraseña
         $hashContrasena = password_hash($contrasena, PASSWORD_DEFAULT);
 
         $conexion = conectar();
@@ -24,10 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["id"])) {
         }
 
         $consulta = $conexion->prepare("INSERT INTO usuarios (NombreUsuario, Tipo, Contrasenia) VALUES (?, ?, ?)");
-        $tipo = "Empleado";
-
-        $consulta->bind_param("sss", $idUsuario, $tipo, $hashContrasena);
-
+        $consulta->bind_param("sss", $idUsuario, $tipoUsuario, $hashContrasena);
 
         try {
             if ($consulta->execute()) {
@@ -72,10 +66,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["id"])) {
             <label for="contrasena">Contraseña:</label>
             <input type="password" name="contrasena" required><br>
 
+            <!-- Campo para el tipo de usuario -->
+            <label for="tipo">Tipo de Usuario:</label>
+            <select name="tipo" required>
+                <option value="Cliente">Cliente</option>
+                <option value="Empleado">Empleado</option>
+            </select><br><br>
+
             <button type="submit">Registrarse</button>
         </form>
 
-        <form method="post" action="LoginCli.php">
+        <form method="post" action="Login.php">
             <button type="submit">Iniciar sesión</button>
         </form>
     </div>
