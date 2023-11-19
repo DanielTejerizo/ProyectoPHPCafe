@@ -1,124 +1,120 @@
-<!DOCTYPE html>
-<html>
+<?php
+include 'conexion.php';
 
-<head>
-  <title>Página de Productos</title>
-  <link rel="stylesheet" type="text/css" href="css/Productos.css">
-</head>
+// Manejar el envío del formulario
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $conn = conectar();
 
-<body>
-  <h1>Productos</h1>
-  <form action="procesar_pedido.php" method="post">
-    <div class="product-container">
-      <div class="product">
-        <img src="./Img/CafeAmericano.png" alt="Producto 1" height="170" width="170">
-        <h2 id="nombre_producto">Café Molido Fino</h2>
-        <input type="hidden" id="id_producto" name="id_producto">
-        <p>Categoria: Americano</p>
-        <p>Es un café tradicionalmente americano molido y fino</p>
-        <label for="id_pedido">ID Pedido:</label>
-        <input type="number" id="id_pedido" name="id_pedido"><br><br>
-        <label for="id_cliente">ID Cliente:</label>
-        <input type="number" id="id_cliente" name="id_cliente" required><br><br>
-        <p>Precio: $5.99</p>
-        <label for="cantidad_producto1">Cantidad:</label>
-        <input type="number" id="cantidad_producto1" name="cantidad_producto1" min="1"><br><br>
-        <button type="submit" class="boton" type="button" onclick="setProductId()">Comprar ahora</button>
-      </div>
-      <div class="product">
-        <img src="./Img/Café Cold Brew.jpg" alt="Producto 2" height="170" width="170">
-        <h2>Café Cold Brew</h2>
-        <p>Categoria: Americano</p>
-        <p>Es un café tradicionalmente americano infusionado y frio</p>
-        <p>Precio: $5.99</p>
-        <label for="cantidad_producto1">Cantidad:</label>
-        <input type="number" id="cantidad_producto1" name="cantidad_producto1" min="1"><br><br>
-        <button class="boton" type="submit">Comprar ahora</button>
-      </div>
-      <div class="product">
-        <img src="./Img/CafePuerto.jpg" alt="Producto 3" height="170" width="170">
-        <h2>Café Puertorriqueño Suave</h2>
-        <p>Categoria: Puertorriqueño</p>
-        <p>Es un café tradicionalmente puertorriqueño</p>
-        <p>Precio: $5.99</p>
-        <label for="cantidad_producto1">Cantidad:</label>
-        <input type="number" id="cantidad_producto1" name="cantidad_producto1" min="1"><br><br>
-        <button class="boton" type="submit">Comprar ahora</button>
-      </div>
-      <div class="product">
-        <img src="./Img/CafeAmericano.png" alt="Producto 1">
-        <h2>Café Molido Fino</h2>
-        <p>Categoria: Americano</p>
-        <p>Es un café tradicionalmente americano</p>
-        <p>Precio: $5.99</p>
-        <label for="cantidad_producto1">Cantidad:</label>
-        <input type="number" id="cantidad_producto1" name="cantidad_producto1" min="1"><br><br>
-        <button class="boton" type="submit">Comprar ahora</button>
-      </div>
-      <div class="product">
-        <img src="./Img/CafeAmericano.png" alt="Producto 1">
-        <h2>Café Molido Fino</h2>
-        <p>Categoria: Americano</p>
-        <p>Es un café tradicionalmente americano</p>
-        <p>Precio: $5.99</p>
-        <label for="cantidad_producto1">Cantidad:</label>
-        <input type="number" id="cantidad_producto1" name="cantidad_producto1" min="1"><br><br>
-        <button class="boton" type="submit">Comprar ahora</button>
-      </div>
-      <div class="product">
-        <img src="./Img/CafeAmericano.png" alt="Producto 1">
-        <h2>Café Molido Fino</h2>
-        <p>Categoria: Americano</p>
-        <p>Es un café tradicionalmente americano</p>
-        <p>Precio: $5.99</p>
-        <label for="cantidad_producto1">Cantidad:</label>
-        <input type="number" id="cantidad_producto1" name="cantidad_producto1" min="1"><br><br>
-        <button class="boton" type="submit">Comprar ahora</button>
-      </div>
-      <div class="product">
-        <img src="./Img/CafeAmericano.png" alt="Producto 1">
-        <h2>Café Molido Fino</h2>
-        <p>Categoria: Americano</p>
-        <p>Es un café tradicionalmente americano</p>
-        <p>Precio: $5.99</p>
-        <label for="cantidad_producto1">Cantidad:</label>
-        <input type="number" id="cantidad_producto1" name="cantidad_producto1" min="1"><br><br>
-        <button class="boton" type="submit">Comprar ahora</button>
-      </div>
-      <div class="product">
-        <img src="./Img/CafeAmericano.png" alt="Producto 1">
-        <h2>Café Molido Fino</h2>
-        <p>Categoria: Americano</p>
-        <p>Es un café tradicionalmente americano</p>
-        <p>Precio: $5.99</p>
-        <label for="cantidad_producto1">Cantidad:</label>
-        <input type="number" id="cantidad_producto1" name="cantidad_producto1" min="1"><br><br>
-        <button class="boton" type="submit">Comprar ahora</button>
-      </div>
-      <div class="product">
-        <img src="./Img/CafeAmericano.png" alt="Producto 1">
-        <h2>Café Molido Fino</h2>
-        <p>Categoria: Americano</p>
-        <p>Es un café tradicionalmente americano</p>
-        <p>Precio: $5.99</p>
-        <label for="cantidad_producto1">Cantidad:</label>
-        <input type="number" id="cantidad_producto1" name="cantidad_producto1" min="1"><br><br>
-        <button class="boton" type="submit">Comprar ahora</button>
-      </div>
-    </div>
-  </form>
-
-  <script>
-    function setProductId(productNumber) {
-      var nombreProducto = document.getElementById("nombre_producto" + productNumber).innerText;
-      var idProducto = obtenerIdProductoDesdeNombre(nombreProducto);
-      document.getElementById("id_producto").value = idProducto;
-
-      // Envía el formulario correspondiente al producto
-      document.getElementById("form_producto" + productNumber).submit();
+    // Verificar la conexión
+    if ($conn->connect_error) {
+        die("Error de conexión: " . $conn->connect_error);
     }
 
-  </script>
-</body>
+    // Obtener el ID del producto seleccionado, la cantidad y generar un número de pedido y empleado aleatorios
+    $idProductoSeleccionado = $_POST['producto'];
+    $cantidad = $_POST['cantidad'];
+    $nombreUsuario = $_POST['nombre_usuario'];
+    $numeroPedido = rand(1000, 9999);
+    $idPedido = rand(10000, 99999); // Nuevo idPedido aleatorio
 
+    // Obtener aleatoriamente un ID de empleado de la tabla de usuarios
+    $sqlEmpleados = "SELECT idEmpleado FROM empleados";
+    $resultEmpleados = $conn->query($sqlEmpleados);
+
+    if ($resultEmpleados->num_rows > 0) {
+        $empleadosDisponibles = array();
+        while ($rowEmpleado = $resultEmpleados->fetch_assoc()) {
+            $empleadosDisponibles[] = $rowEmpleado['idEmpleado'];
+        }
+
+        // Elegir aleatoriamente un ID de empleado
+        $idEmpleado = $empleadosDisponibles[array_rand($empleadosDisponibles)];
+
+        // Obtener el precio del producto seleccionado
+        $sqlPrecio = "SELECT Precio FROM productos WHERE idProducto = '$idProductoSeleccionado'";
+        $resultPrecio = $conn->query($sqlPrecio);
+
+        if ($resultPrecio->num_rows > 0) {
+            $rowPrecio = $resultPrecio->fetch_assoc();
+            $precioProducto = $rowPrecio['Precio'];
+
+            // Calcular el total
+            $total = $cantidad * $precioProducto;
+
+            // Inserción en la tabla de pedidos con idPedido aleatorio
+            $sqlInsertarPedido = "INSERT INTO pedidos (idPedido, idProducto, Cantidad, Total, idCliente, idEmpleado) VALUES ('$idPedido', '$idProductoSeleccionado', '$cantidad', '$total', '$nombreUsuario', '$idEmpleado')";
+
+            if ($conn->query($sqlInsertarPedido) === TRUE) {
+                echo "Pedido registrado correctamente. Número de Pedido: " . $idPedido;
+            } else {
+                echo "Error al registrar el pedido: " . $conn->error;
+            }
+
+        } else {
+            echo "Error al obtener el precio del producto.";
+        }
+
+    } else {
+        echo "No hay empleados disponibles.";
+    }
+
+    // Cerrar la conexión
+    $conn->close();
+}
+?>
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="css/Login.css">
+    <title>Realizar Pedido</title>
+</head>
+<body>
+
+<h2>Seleccionar Producto para Pedido</h2>
+
+<form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+    <?php
+    $conn = conectar();
+
+    // Verificar la conexión
+    if ($conn->connect_error) {
+        die("Error de conexión: " . $conn->connect_error);
+    }
+
+    // Consulta para obtener productos disponibles
+    $sql = "SELECT idProducto, NombreProd FROM vista_productos_disponibles";
+    $result = $conn->query($sql);
+
+    // Crear un menú desplegable con los productos
+    echo "Selecciona un producto: ";
+    echo "<select name='producto'>";
+    while($row = $result->fetch_assoc()) {
+        echo "<option value='" . $row['idProducto'] . "'>" . $row['NombreProd'] . "</option>";
+    }
+    echo "</select>";
+
+    // Cerrar la conexión
+    $conn->close();
+    ?>
+
+    <br><br>
+
+    <!-- Agregar campo para ingresar el nombre de usuario -->
+    <label for="nombre_usuario">Nombre de Usuario:</label>
+    <input type="text" name="nombre_usuario" required>
+
+    <br><br>
+
+    <!-- Agregar campo para ingresar la cantidad -->
+    <label for="cantidad">Cantidad:</label>
+    <input type="number" name="cantidad" required>
+
+    <br><br>
+    <input type="submit" name="submit" value="Realizar Pedido">
+</form>
+
+</body>
 </html>
