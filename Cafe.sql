@@ -194,14 +194,3 @@ INSERT INTO productos (idProducto, NombreProd, Precio, Stock, IdCategoria, idPro
 ('8', 'Café Mocha', 4.79, 70, (select idCategoria from categoria where categoria.NombreCat = "Café Colombiano"), (select idProveedor from proveedores where proveedores.NombreProv = "Kaffekapslen")),
 ('9', 'Café Cold Brew', 3.99, 110, (select idCategoria from categoria where categoria.NombreCat = "Café Americano"), (select idProveedor from proveedores where proveedores.NombreProv = "Cafe Saula")),
 ('10', 'Café Irlandés', 5.99, 55, (select idCategoria from categoria where categoria.NombreCat = "Café Arabica"), (select idProveedor from proveedores where proveedores.NombreProv = "Cafe Kimbo"));
-
-/*Pedido*/
-
-INSERT INTO pedidos (idPedido, idProducto, Cantidad, Total, idCliente, idEmpleado) 
-VALUES (
-    '1', 
-    (SELECT productos.idProducto FROM productos WHERE productos.NombreProd = 'Café Puertorriqueño Suave'), 
-    10, 100,
-    (SELECT clientes.idCliente FROM clientes WHERE clientes.NombreCli = 'Teresa Roman García'),
-    (SELECT empleados.idEmpleado FROM empleados WHERE empleados.NombreEmp = 'Lucia García García')
-);
