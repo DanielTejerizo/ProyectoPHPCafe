@@ -137,6 +137,26 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
+-- -----------------------------------------------------
+-- Table `trabajophp`.`vista_productos_disponibles`
+-- -----------------------------------------------------
+
+CREATE VIEW `vista_productos_disponibles` AS
+SELECT
+  p.`idProducto`,
+  p.`NombreProd`,
+  p.`Precio`,
+  p.`Stock`,
+  c.`NombreCat` AS `Categoria`,
+  pr.`NombreProv` AS `Proveedor`
+FROM
+  `trabajophp`.`productos` p
+JOIN
+  `trabajophp`.`categoria` c ON p.`IdCategoria` = c.`idCategoria`
+JOIN
+  `trabajophp`.`proveedores` pr ON p.`idProveedor` = pr.`idProveedor`;
+
+
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;

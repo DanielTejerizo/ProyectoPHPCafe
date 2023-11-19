@@ -101,7 +101,7 @@ function realizarPedido($idPedido, $idProducto, $cantidad, $idCliente) {
 // Manejo del formulario
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $idPedido = $_POST["id_pedido"];
-    $idProducto = $_POST["id_producto"]; // Asegúrate de tener este campo en tu formulario
+    $idProducto = $_POST["id_producto"];
     $cantidad = $_POST["cantidad_producto1"];
     $idCliente = $_POST["id_cliente"];
 

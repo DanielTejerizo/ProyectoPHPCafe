@@ -23,7 +23,7 @@
         <p>Precio: $5.99</p>
         <label for="cantidad_producto1">Cantidad:</label>
         <input type="number" id="cantidad_producto1" name="cantidad_producto1" min="1"><br><br>
-        <button class="boton" type="submit" name="comprar_producto" value="Café Molido Fino">Comprar ahora</button>
+        <button type="submit" class="boton" type="button" onclick="setProductId()">Comprar ahora</button>
       </div>
       <div class="product">
         <img src="./Img/Café Cold Brew.jpg" alt="Producto 2" height="170" width="170">
@@ -109,10 +109,15 @@
   </form>
 
   <script>
-    function setProductId() {
-      var nombreProducto = document.getElementById("nombre_producto").innerText;
-      document.getElementById("id_producto").value = nombreProducto;
+    function setProductId(productNumber) {
+      var nombreProducto = document.getElementById("nombre_producto" + productNumber).innerText;
+      var idProducto = obtenerIdProductoDesdeNombre(nombreProducto);
+      document.getElementById("id_producto").value = idProducto;
+
+      // Envía el formulario correspondiente al producto
+      document.getElementById("form_producto" + productNumber).submit();
     }
+
   </script>
 </body>
 
