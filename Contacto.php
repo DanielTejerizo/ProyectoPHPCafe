@@ -6,6 +6,7 @@
     <title>Contacto</title>
     <style>
         body {
+            background-color: #c79d5a;
             font-family: Arial, sans-serif;
             margin: 20px;
         }
@@ -33,7 +34,7 @@
         }
 
         button {
-            background-color: #4CAF50;
+            background-color: #666;
             color: white;
             padding: 10px 15px;
             border: none;
@@ -42,7 +43,8 @@
         }
 
         button:hover {
-            background-color: #45a049;
+            background-color: #d6b482;
+            color: black;
         }
     </style>
 </head>
@@ -51,7 +53,7 @@
         <h1>Contacto</h1>
     </header>
 
-    <form action="procesar_formulario.php" method="post">
+    <form action="Agradecimiento.php" method="post">
         <label for="nombre">Nombre:</label>
         <input type="text" id="nombre" name="nombre" required>
 
