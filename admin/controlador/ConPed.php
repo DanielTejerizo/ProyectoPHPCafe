@@ -18,7 +18,7 @@
         <button type="submit">Baja</button>
     </form>
 
-    <form action="Modif-pedidos.php" method="post">
+    <form action="../Modif-pedidos.php" method="post">
         <button type="submit">Modificacion</button>
     </form>
 

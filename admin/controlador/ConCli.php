@@ -10,15 +10,15 @@
 <body>
     <h1>Panel de Modificación Clientes</h1>
 
-    <form action="../Alta-clientes.php" method="post">
+    <form action="../Alta-cliente.php" method="post">
         <button type="submit">Alta</button>
     </form>
 
-    <form action="../Baja-clientes.php" method="post">
+    <form action="../Baja-cliente.php" method="post">
         <button type="submit">Baja</button>
     </form>
 
-    <form action="Modif-clienets.php" method="post">
+    <form action="../Modif-cliente.php" method="post">
         <button type="submit">Modificacion</button>
     </form>
 
