@@ -18,13 +18,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $idPedido = rand(10000, 99999); // Nuevo idPedido aleatorio
 
     // Obtener aleatoriamente un ID de empleado de la tabla de usuarios
-    $sqlEmpleados = "SELECT NombreUsuario FROM usuarios WHERE Tipo = 'Empleado'";
+    $sqlEmpleados = "SELECT idEmpleado FROM empleados";
     $resultEmpleados = $conn->query($sqlEmpleados);
 
     if ($resultEmpleados->num_rows > 0) {
         $empleadosDisponibles = array();
         while ($rowEmpleado = $resultEmpleados->fetch_assoc()) {
-            $empleadosDisponibles[] = $rowEmpleado['NombreUsuario'];
+            $empleadosDisponibles[] = $rowEmpleado['idEmpleado'];
         }
 
         // Elegir aleatoriamente un ID de empleado
@@ -43,7 +43,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             // Inserción en la tabla de pedidos con idPedido aleatorio
             $sqlInsertarPedido = "INSERT INTO pedidos (idPedido, idProducto, Cantidad, Total, idCliente, idEmpleado) VALUES ('$idPedido', '$idProductoSeleccionado', '$cantidad', '$total', '$idCliente', '$idEmpleado')";
-
 
             if ($conn->query($sqlInsertarPedido) === TRUE) {
                 echo "Pedido registrado correctamente. Número de Pedido: " . $idPedido;
