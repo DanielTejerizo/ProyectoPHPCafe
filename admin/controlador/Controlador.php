@@ -34,5 +34,9 @@
         <button type="submit">Proveedores</button>
     </form>
 
+    <form action="../Baja-users.php" method="post">
+        <button type="submit">Usuarios baja</button>
+    </form>
+
 </body>
 </html>

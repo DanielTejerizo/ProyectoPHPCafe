@@ -5,8 +5,6 @@ include('../conexion.php'); // Asegúrate de ajustar la ruta correctamente
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["NombreUsuario"])) {
     // Obtener los valores del formulario de usuarios
     $NombreUsuario = $_POST["NombreUsuario"];
-    $Tipo = $_POST["Tipo"];
-    $Contrasenia = $_POST["Contrasenia"];
 
     // Conectar a la base de datos
     $conexion = conectar();
@@ -32,6 +30,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["NombreUsuario"])) {
     } else {
         echo "No existe un usuario con ese nombre.";
     }
+
+    // Volver a ejecutar la consulta después de eliminar el usuario
+    $consulta_usuarios = $conexion->query("SELECT NombreUsuario, Tipo FROM usuarios");
 
     // Cerrar la conexión
     $conexion->close();
@@ -67,14 +68,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["NombreUsuario"])) {
 
     <div>
         <?php
-        // Conectar a la base de datos
-        $conexion = conectar();
-
-        // Consultar la tabla de usuarios
-        $consulta_usuarios = $conexion->query("SELECT NombreUsuario, Tipo FROM usuarios");
-
-        // Verificar si hay resultados
-        if ($consulta_usuarios->num_rows > 0) {
+        // Mostrar la tabla de usuarios después de eliminar
+        if (isset($consulta_usuarios) && $consulta_usuarios->num_rows > 0) {
             echo "<h2>Lista de Usuarios</h2>";
             echo "<table border='1'>
                 <tr>
@@ -93,9 +88,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["NombreUsuario"])) {
         } else {
             echo "No hay usuarios registrados.";
         }
-
-        // Cerrar la conexión
-        $conexion->close();
         ?>
     </div>
 
