@@ -1,5 +1,5 @@
 <?php
-include 'conexion.php'; // Asegúrate de incluir la ruta correcta
+include 'conexion.php';
 
 // Manejar el envío del formulario
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -10,12 +10,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         die("Error de conexión: " . $conn->connect_error);
     }
 
-    // Obtener el ID del producto seleccionado
+    // Obtener el ID del producto seleccionado y la cantidad
     $idProductoSeleccionado = $_POST['producto'];
+    $cantidad = $_POST['cantidad'];
 
-    // Puedes realizar alguna acción con el ID del producto seleccionado, como agregarlo a una tabla de pedidos
+    // Generar un número de pedido aleatorio
+    $numeroPedido = rand(1000, 9999);
 
-    echo "Pedido realizado para el producto con ID: " . $idProductoSeleccionado;
+    // Puedes realizar alguna acción con el ID del producto, la cantidad y el número de pedido, como agregarlos a una tabla de pedidos
+    echo "Pedido realizado para el producto con ID: " . $idProductoSeleccionado . ", Cantidad: " . $cantidad . ", Número de Pedido: " . $numeroPedido;
 
     // Cerrar la conexión
     $conn->close();
@@ -27,6 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="css/Login.css">
     <title>Realizar Pedido</title>
 </head>
 <body>
@@ -57,6 +61,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Cerrar la conexión
     $conn->close();
     ?>
+
+    <br><br>
+
+    <!-- Agregar campo para ingresar la cantidad -->
+    <label for="cantidad">Cantidad:</label>
+    <input type="number" name="cantidad" required>
 
     <br><br>
     <input type="submit" name="submit" value="Realizar Pedido">
