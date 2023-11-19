@@ -15,24 +15,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $cantidad = $_POST['cantidad'];
     $idCliente = $_POST['cliente'];
     $numeroPedido = rand(1000, 9999);
-    $numeroEmpleado = rand(100, 999);
 
-    // Obtener el precio del producto seleccionado
-    $sqlPrecio = "SELECT Precio FROM productos WHERE idProducto = '$idProductoSeleccionado'";
-    $resultPrecio = $conn->query($sqlPrecio);
-    
-    if ($resultPrecio->num_rows > 0) {
-        $rowPrecio = $resultPrecio->fetch_assoc();
-        $precioProducto = $rowPrecio['Precio'];
+    // Obtener aleatoriamente un ID de empleado de la tabla de usuarios
+    $sqlEmpleados = "SELECT NombreUsuario FROM usuarios WHERE Tipo = 'Empleado'";
+    $resultEmpleados = $conn->query($sqlEmpleados);
 
-        // Calcular el total
-        $total = $cantidad * $precioProducto;
+    if ($resultEmpleados->num_rows > 0) {
+        $empleadosDisponibles = array();
+        while ($rowEmpleado = $resultEmpleados->fetch_assoc()) {
+            $empleadosDisponibles[] = $rowEmpleado['NombreUsuario'];
+        }
 
-        // Puedes realizar alguna acción con el ID del producto, la cantidad, el ID del cliente, el número de pedido, el número de empleado y el total, como agregarlos a una tabla de pedidos
-        echo "Pedido realizado para el producto con ID: " . $idProductoSeleccionado . ", Cantidad: " . $cantidad . ", ID del Cliente: " . $idCliente . ", Número de Pedido: " . $numeroPedido . ", Número de Empleado: " . $numeroEmpleado . ", Total: $" . $total;
+        // Elegir aleatoriamente un ID de empleado
+        $idEmpleado = $empleadosDisponibles[array_rand($empleadosDisponibles)];
+
+        // Puedes realizar alguna acción con el ID del producto, la cantidad, el ID del cliente, el número de pedido, el ID de empleado y el total, como agregarlos a una tabla de pedidos
+        echo "Pedido realizado para el producto con ID: " . $idProductoSeleccionado . ", Cantidad: " . $cantidad . ", ID del Cliente: " . $idCliente . ", Número de Pedido: " . $numeroPedido . ", ID de Empleado: " . $idEmpleado;
 
     } else {
-        echo "Error al obtener el precio del producto.";
+        echo "No hay empleados disponibles.";
     }
 
     // Cerrar la conexión
