@@ -40,8 +40,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Calcular el total
             $total = $cantidad * $precioProducto;
 
-            // Puedes realizar alguna acción con el ID del producto, la cantidad, el ID del cliente, el número de pedido, el ID de empleado y el total, como agregarlos a una tabla de pedidos
-            echo "Pedido realizado para el producto con ID: " . $idProductoSeleccionado . ", Cantidad: " . $cantidad . ", ID del Cliente: " . $idCliente . ", Número de Pedido: " . $numeroPedido . ", ID de Empleado: " . $idEmpleado . ", Total: $" . $total;
+            // Inserción en la tabla de pedidos
+            $sqlInsertarPedido = "INSERT INTO pedidos (idProducto, idCliente, idEmpleado, Cantidad, Total, NumeroPedido) VALUES ('$idProductoSeleccionado', '$idCliente', '$idEmpleado', '$cantidad', '$total', '$numeroPedido')";
+
+            if ($conn->query($sqlInsertarPedido) === TRUE) {
+                echo "Pedido registrado correctamente. Número de Pedido: " . $numeroPedido;
+            } else {
+                echo "Error al registrar el pedido: " . $conn->error;
+            }
 
         } else {
             echo "Error al obtener el precio del producto.";
