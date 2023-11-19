@@ -10,7 +10,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["NombreUsuario"])) {
     $conexion = conectar();
 
     // Verificar si el usuario existe antes de realizar la operación
-    $consulta_existencia = $conexion->prepare("SELECT NombreUsuario FROM usuarios WHERE NombreUsuario = ?");
+    $consulta_existencia = $conexion->prepare("SELECT NombreUsuario, Tipo FROM usuarios WHERE NombreUsuario = ?");
     $consulta_existencia->bind_param("s", $NombreUsuario);
     $consulta_existencia->execute();
     $consulta_existencia->store_result();
@@ -68,6 +68,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["NombreUsuario"])) {
 
     <div>
         <?php
+
+        $conexion = conectar();
+
+        // Consultar la tabla de proveedores
+        $consulta_usuarios = $conexion->query("SELECT NombreUsuario,Tipo FROM usuarios");
         // Mostrar la tabla de usuarios después de eliminar
         if (isset($consulta_usuarios) && $consulta_usuarios->num_rows > 0) {
             echo "<h2>Lista de Usuarios</h2>";
