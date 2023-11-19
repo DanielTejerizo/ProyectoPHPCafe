@@ -183,7 +183,7 @@ INSERT INTO proveedores (idProveedor, NombreProv, Direccion, Telefono, PersonaCo
 
 /*Usuarios*/
 
-INSERT INTO usuarios (NombreUsuario, Tipo, Contrasenia) VALUES ("EM1","Empleado","$2y$10$p6Qfy35P25EYO/sgeynfl.sXPlIR6vU4EX121ladtS39/NlARb4by"),("CL1","Cliente","$$2y$10$p6Qfy35P25EYO/sgeynfl.sXPlIR6vU4EX121ladtS39/NlARb4by");
+INSERT INTO usuarios (NombreUsuario, Tipo, Contrasenia) VALUES ("EM1","Empleado","$2y$10$p6Qfy35P25EYO/sgeynfl.sXPlIR6vU4EX121ladtS39/NlARb4by"),("CL2","Cliente","$2y$10$49bVD6OEsFU8U4Nzf7zRYOHlZAVC4lXHXsayiiowO/Am01Qc1Oswu");
 
 
 /*Productos*/
