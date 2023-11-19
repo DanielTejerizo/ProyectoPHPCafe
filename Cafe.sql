@@ -137,29 +137,6 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
--- -----------------------------------------------------
--- Table `trabajophp`.`carrito`
--- -----------------------------------------------------
-
-CREATE TABLE IF NOT EXISTS `trabajophp`.`carrito` (
-  `idCarrito` INT NOT NULL AUTO_INCREMENT,
-  `idUsuario` VARCHAR(200) NOT NULL, -- Asumiendo que el nombre de usuario se utiliza como identificador único
-  `idProducto` INT NOT NULL,
-  `Cantidad` INT NOT NULL,
-  PRIMARY KEY (`idCarrito`),
-  INDEX `fk_Carrito_Usuarios1_idx` (`idUsuario` ASC) VISIBLE,
-  INDEX `fk_Carrito_Productos1_idx` (`idProducto` ASC) VISIBLE,
-  CONSTRAINT `fk_Carrito_Usuarios1`
-    FOREIGN KEY (`idUsuario`)
-    REFERENCES `trabajophp`.`usuarios` (`NombreUsuario`),
-  CONSTRAINT `fk_Carrito_Productos1`
-    FOREIGN KEY (`idProducto`)
-    REFERENCES `trabajophp`.`productos` (`idProducto`)
-) ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
-
-
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
