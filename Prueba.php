@@ -17,8 +17,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $numeroPedido = rand(1000, 9999);
     $numeroEmpleado = rand(100, 999);
 
-    // Puedes realizar alguna acción con el ID del producto, la cantidad, el ID del cliente, el número de pedido y el número de empleado, como agregarlos a una tabla de pedidos
-    echo "Pedido realizado para el producto con ID: " . $idProductoSeleccionado . ", Cantidad: " . $cantidad . ", ID del Cliente: " . $idCliente . ", Número de Pedido: " . $numeroPedido . ", Número de Empleado: " . $numeroEmpleado;
+    // Obtener el precio del producto seleccionado
+    $sqlPrecio = "SELECT Precio FROM productos WHERE idProducto = '$idProductoSeleccionado'";
+    $resultPrecio = $conn->query($sqlPrecio);
+    
+    if ($resultPrecio->num_rows > 0) {
+        $rowPrecio = $resultPrecio->fetch_assoc();
+        $precioProducto = $rowPrecio['Precio'];
+
+        // Calcular el total
+        $total = $cantidad * $precioProducto;
+
+        // Puedes realizar alguna acción con el ID del producto, la cantidad, el ID del cliente, el número de pedido, el número de empleado y el total, como agregarlos a una tabla de pedidos
+        echo "Pedido realizado para el producto con ID: " . $idProductoSeleccionado . ", Cantidad: " . $cantidad . ", ID del Cliente: " . $idCliente . ", Número de Pedido: " . $numeroPedido . ", Número de Empleado: " . $numeroEmpleado . ", Total: $" . $total;
+
+    } else {
+        echo "Error al obtener el precio del producto.";
+    }
 
     // Cerrar la conexión
     $conn->close();
