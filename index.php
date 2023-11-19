@@ -17,7 +17,7 @@
     <nav class="menu-container">
     <div class="left-menu">
         <a href="Productos.php"><span>Productos</span></a>
-        <a href="#seccion2"><span>Sección 2</span></a>
+        <a href="Contacto.php"><span>Contacto</span></a>
         <a href="Nosotros.php"><span>A cerca de nosotros</span></a>
     </div>
     <div class="right-menu">
