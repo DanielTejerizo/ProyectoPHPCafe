@@ -46,7 +46,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
             if ($conn->query($sqlInsertarPedido) === TRUE) {
-                echo "Pedido registrado correctamente. Número de Pedido: " . $numeroPedido . ", ID de Pedido: " . $idPedido;
+                echo "Pedido registrado correctamente. Número de Pedido: " . $idPedido;
             } else {
                 echo "Error al registrar el pedido: " . $conn->error;
             }

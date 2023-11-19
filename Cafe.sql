@@ -47,7 +47,7 @@ COLLATE = utf8mb4_0900_ai_ci;
 -- Table `trabajophp`.`empleados`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `trabajophp`.`empleados` (
-  `idEmpleado` INT NOT NULL,
+  `idEmpleado` VARCHAR(45) NOT NULL,
   `NombreEmp` VARCHAR(45) NOT NULL,
   `Edad` VARCHAR(45) NOT NULL,
   `FechaContratacion` DATE NOT NULL,
@@ -106,7 +106,7 @@ CREATE TABLE IF NOT EXISTS `trabajophp`.`pedidos` (
   `Cantidad` INT NOT NULL,
   `Total` VARCHAR(45) NOT NULL,
   `idCliente` INT NOT NULL,
-  `idEmpleado` INT NOT NULL,
+  `idEmpleado` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`idPedido`),
   INDEX `fk_Pedidos_Clientes1_idx` (`idCliente` ASC) VISIBLE,
   INDEX `fk_Pedidos_Productos1_idx` (`idProducto` ASC) VISIBLE,
@@ -172,7 +172,7 @@ INSERT INTO clientes (idCliente, NombreCli, Direccion, Telefono) value ("1", "Te
 
 /*Empleados*/
 
-INSERT INTO empleados (idEmpleado, NombreEmp, Edad, FechaContratacion, NumeroCuenta) value ("1", "Lucia García García", "40", "2018-05-02", "ES12 1548 1254 8547 7788"), ("2", "Mario Campiñez Fernandez", "20", "2021-01-22", "ES25 3658 2145 1452 2288"), ("3", "Fermín Lopez Reverte", "32", "2008-11-14", "ES52 4896 2314 2365 1452"), ("4", "Juana María Martón Gómez", "50", "2001-12-07", "ES78 8521 4563 2145 4488"), ("5", "Fernando Gobernado Fuentes", "33", "2022-07-09", "ES14 2369 8547 4521 4521");
+INSERT INTO empleados (idEmpleado, NombreEmp, Edad, FechaContratacion, NumeroCuenta) value ("EM1", "Lucia García García", "40", "2018-05-02", "ES12 1548 1254 8547 7788"), ("EM2", "Mario Campiñez Fernandez", "20", "2021-01-22", "ES25 3658 2145 1452 2288"), ("EM3", "Fermín Lopez Reverte", "32", "2008-11-14", "ES52 4896 2314 2365 1452"), ("EM4", "Juana María Martón Gómez", "50", "2001-12-07", "ES78 8521 4563 2145 4488"), ("EM5", "Fernando Gobernado Fuentes", "33", "2022-07-09", "ES14 2369 8547 4521 4521");
 
 /*Proveedores*/
 
