@@ -10,10 +10,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         die("Error de conexión: " . $conn->connect_error);
     }
 
-    // Obtener el ID del producto seleccionado, la cantidad, el ID del cliente y generar un número de pedido y empleado aleatorios
+    // Obtener el ID del producto seleccionado, la cantidad y generar un número de pedido y empleado aleatorios
     $idProductoSeleccionado = $_POST['producto'];
     $cantidad = $_POST['cantidad'];
-    $idCliente = $_POST['cliente'];
+    $nombreUsuario = $_POST['nombre_usuario'];
     $numeroPedido = rand(1000, 9999);
     $idPedido = rand(10000, 99999); // Nuevo idPedido aleatorio
 
@@ -42,7 +42,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $total = $cantidad * $precioProducto;
 
             // Inserción en la tabla de pedidos con idPedido aleatorio
-            $sqlInsertarPedido = "INSERT INTO pedidos (idPedido, idProducto, Cantidad, Total, idCliente, idEmpleado) VALUES ('$idPedido', '$idProductoSeleccionado', '$cantidad', '$total', '$idCliente', '$idEmpleado')";
+            $sqlInsertarPedido = "INSERT INTO pedidos (idPedido, idProducto, Cantidad, Total, idCliente, idEmpleado) VALUES ('$idPedido', '$idProductoSeleccionado', '$cantidad', '$total', '$nombreUsuario', '$idEmpleado')";
 
             if ($conn->query($sqlInsertarPedido) === TRUE) {
                 echo "Pedido registrado correctamente. Número de Pedido: " . $idPedido;
@@ -96,21 +96,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
     echo "</select>";
 
-    // Consulta para obtener clientes
-    $sqlClientes = "SELECT idCliente, NombreCli FROM clientes";
-    $resultClientes = $conn->query($sqlClientes);
-
-    // Crear un menú desplegable con los clientes
-    echo "<br><br>Selecciona un cliente: ";
-    echo "<select name='cliente'>";
-    while($rowCliente = $resultClientes->fetch_assoc()) {
-        echo "<option value='" . $rowCliente['idCliente'] . "'>" . $rowCliente['NombreCli'] . "</option>";
-    }
-    echo "</select>";
-
     // Cerrar la conexión
     $conn->close();
     ?>
+
+    <br><br>
+
+    <!-- Agregar campo para ingresar el nombre de usuario -->
+    <label for="nombre_usuario">Nombre de Usuario:</label>
+    <input type="text" name="nombre_usuario" required>
 
     <br><br>
 
