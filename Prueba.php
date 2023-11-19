@@ -29,8 +29,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Elegir aleatoriamente un ID de empleado
         $idEmpleado = $empleadosDisponibles[array_rand($empleadosDisponibles)];
 
-        // Puedes realizar alguna acción con el ID del producto, la cantidad, el ID del cliente, el número de pedido, el ID de empleado y el total, como agregarlos a una tabla de pedidos
-        echo "Pedido realizado para el producto con ID: " . $idProductoSeleccionado . ", Cantidad: " . $cantidad . ", ID del Cliente: " . $idCliente . ", Número de Pedido: " . $numeroPedido . ", ID de Empleado: " . $idEmpleado;
+        // Obtener el precio del producto seleccionado
+        $sqlPrecio = "SELECT Precio FROM productos WHERE idProducto = '$idProductoSeleccionado'";
+        $resultPrecio = $conn->query($sqlPrecio);
+
+        if ($resultPrecio->num_rows > 0) {
+            $rowPrecio = $resultPrecio->fetch_assoc();
+            $precioProducto = $rowPrecio['Precio'];
+
+            // Calcular el total
+            $total = $cantidad * $precioProducto;
+
+            // Puedes realizar alguna acción con el ID del producto, la cantidad, el ID del cliente, el número de pedido, el ID de empleado y el total, como agregarlos a una tabla de pedidos
+            echo "Pedido realizado para el producto con ID: " . $idProductoSeleccionado . ", Cantidad: " . $cantidad . ", ID del Cliente: " . $idCliente . ", Número de Pedido: " . $numeroPedido . ", ID de Empleado: " . $idEmpleado . ", Total: $" . $total;
+
+        } else {
+            echo "Error al obtener el precio del producto.";
+        }
 
     } else {
         echo "No hay empleados disponibles.";
