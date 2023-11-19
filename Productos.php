@@ -20,7 +20,6 @@
         <input type="number" id="id_pedido" name="id_pedido"><br><br>
         <label for="id_cliente">ID Cliente:</label>
         <input type="number" id="id_cliente" name="id_cliente" required><br><br>
-
         <p>Precio: $5.99</p>
         <label for="cantidad_producto1">Cantidad:</label>
         <input type="number" id="cantidad_producto1" name="cantidad_producto1" min="1"><br><br>
@@ -107,10 +106,6 @@
         <button class="boton" type="submit">Comprar ahora</button>
       </div>
     </div>
-  </form>
-
-  <form action="Pedidos.php" method="post">
-    <button class="boton" type="submit">Hacer pedido</button>
   </form>
 
   <script>

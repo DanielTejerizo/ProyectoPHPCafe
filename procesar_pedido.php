@@ -1,14 +1,14 @@
 <?php
 require_once 'conexion.php';
 
-function obtenerIdProducto($nombreProducto) {
+function obtenerIdProducto($idProducto) {
     $conn = conectar();
 
-    // Escapar el nombre del producto para prevenir inyecciones SQL
-    $nombreProducto = mysqli_real_escape_string($conn, $nombreProducto);
+    // Escapar el ID del producto para prevenir inyecciones SQL
+    $idProducto = mysqli_real_escape_string($conn, $idProducto);
 
     // Consulta para obtener el ID del producto
-    $sql = "SELECT idProducto FROM productos WHERE NombreProd = '$nombreProducto'";
+    $sql = "SELECT idProducto FROM productos WHERE idProducto = '$idProducto'";
     $result = mysqli_query($conn, $sql);
 
     // Verificar si se encontró el producto
@@ -40,21 +40,47 @@ function clienteExiste($idCliente) {
     return $existe;
 }
 
-function realizarPedido($idPedido, $nombreProducto, $cantidad, $idCliente, $idEmpleado) {
+function obtenerIdEmpleadoAleatorio() {
     $conn = conectar();
 
-    // Obtener el ID del producto
-    $idProducto = obtenerIdProducto($nombreProducto);
+    // Consulta para obtener un ID de empleado aleatorio
+    $sql = "SELECT idEmpleado FROM empleados ORDER BY RAND() LIMIT 1";
+    $result = mysqli_query($conn, $sql);
+
+    // Verificar si se encontró un empleado
+    if ($row = mysqli_fetch_assoc($result)) {
+        $idEmpleado = $row['idEmpleado'];
+    } else {
+        $idEmpleado = null; // No se encontró ningún empleado
+    }
+
+    // Cerrar la conexión
+    mysqli_close($conn);
+
+    return $idEmpleado;
+}
+
+function realizarPedido($idPedido, $idProducto, $cantidad, $idCliente) {
+    $conn = conectar();
 
     // Verificar si el producto existe
-    if ($idProducto === null) {
-        echo "El producto '$nombreProducto' no existe. Introduce un nombre de producto válido.";
+    if (!obtenerIdProducto($idProducto)) {
+        echo "El producto con ID '$idProducto' no existe. Introduce un ID de producto válido.";
         return;
     }
 
     // Verificar si el cliente existe antes de realizar el pedido
     if (!clienteExiste($idCliente)) {
         echo "El ID de cliente no existe. Introduce un ID válido.";
+        return;
+    }
+
+    // Obtener un ID de empleado aleatorio
+    $idEmpleado = obtenerIdEmpleadoAleatorio();
+
+    // Verificar si se encontró un empleado
+    if ($idEmpleado === null) {
+        echo "No se encontró ningún empleado disponible.";
         return;
     }
 
@@ -75,11 +101,10 @@ function realizarPedido($idPedido, $nombreProducto, $cantidad, $idCliente, $idEm
 // Manejo del formulario
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $idPedido = $_POST["id_pedido"];
-    $nombreProducto = $_POST["id_producto"]; // Asegúrate de tener este campo en tu formulario
+    $idProducto = $_POST["id_producto"]; // Asegúrate de tener este campo en tu formulario
     $cantidad = $_POST["cantidad_producto1"];
     $idCliente = $_POST["id_cliente"];
-    $idEmpleado = $_POST["id_empleado"];
 
-    realizarPedido($idPedido, $nombreProducto, $cantidad, $idCliente, $idEmpleado);
+    realizarPedido($idPedido, $idProducto, $cantidad, $idCliente);
 }
 ?>
