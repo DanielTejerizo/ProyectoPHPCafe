@@ -107,7 +107,6 @@ CREATE TABLE IF NOT EXISTS `trabajophp`.`pedidos` (
   `Total` VARCHAR(45) NOT NULL,
   `idCliente` VARCHAR(45) NOT NULL,
   `idEmpleado` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`idPedido`),
   INDEX `fk_Pedidos_Clientes1_idx` (`idCliente` ASC) VISIBLE,
   INDEX `fk_Pedidos_Productos1_idx` (`idProducto` ASC) VISIBLE,
   INDEX `fk_Pedidos_Empleados1_idx` (`idEmpleado` ASC) VISIBLE,
@@ -123,6 +122,7 @@ CREATE TABLE IF NOT EXISTS `trabajophp`.`pedidos` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
+
 
 
 -- -----------------------------------------------------
