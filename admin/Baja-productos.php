@@ -1,21 +1,21 @@
 <?php
-include('../conexion.php'); // Asegúrate de ajustar la ruta correctamente
+include('../conexion.php');
 
-// Verificar si se ha enviado el formulario
+
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["idProducto"])) {
-    // Obtener el ID del producto a dar de baja
+
     $idProducto = $_POST["idProducto"];
 
-    // Conectar a la base de datos
+
     $conexion = conectar();
 
-    // Preparar la consulta de baja
+
     $secuencia = $conexion->prepare("DELETE FROM Productos WHERE idProducto = ?");
 
-    // Corregir la línea de bind_param
+
     $secuencia->bind_param('s', $idProducto);
 
-    // Ejecutar la consulta de baja
+
     if ($secuencia->execute()) {
         echo "<script>mostrarAlertaBaja();</script>";
         echo "Producto dado de baja exitosamente";
@@ -23,7 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["idProducto"])) {
         echo "Error al dar de baja el producto: " . $secuencia->error;
     }
 
-    // Cerrar la conexión
+
     $conexion->close();
 }
 ?>
@@ -56,13 +56,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["idProducto"])) {
 
     <div>
         <?php
-        // Conectar a la base de datos
+
         $conexion = conectar();
 
-        // Consultar la tabla de productos ordenados por ID
+
         $consulta_productos = $conexion->query("SELECT idProducto, NombreProd, Precio, Stock, IdCategoria, idProveedor FROM Productos ORDER BY idProducto");
 
-        // Verificar si hay resultados
         if ($consulta_productos->num_rows > 0) {
             echo "<h2>Lista de Productos</h2>";
             echo "<table border='1'>
@@ -91,12 +90,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["idProducto"])) {
             echo "No hay productos registrados.";
         }
 
-        // Cerrar la conexión
+
         $conexion->close();
         ?>
     </div>
 
-    <!-- Formularios para otras operaciones (Modificación, Alta, etc.) -->
+
     <form action="Modif-productos.php" method="post">
         <button type="submit">Modificación</button>
     </form>

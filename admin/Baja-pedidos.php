@@ -1,28 +1,28 @@
 <?php
 include('../conexion.php');
 
-// Verificar si se ha enviado el formulario
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Obtener el ID del pedido a dar de baja
+
     $idPedido = $_POST["idPedido"];
 
-    // Conectar a la base de datos
+
     $conexion = conectar();
 
-    // Preparar la consulta de baja
+
     $consulta = $conexion->prepare("DELETE FROM Pedidos WHERE idPedido = ?");
 
-    // Corregir la línea de bind_param
+
     $consulta->bind_param('i', $idPedido);
 
-    // Ejecutar la consulta de baja
+
     if ($consulta->execute()) {
         echo "<script>mostrarAlertaBaja('Pedido dado de baja correctamente');</script>";
     } else {
         echo "Error al dar de baja el pedido: " . $consulta->error;
     }
 
-    // Cerrar la conexión
+
     $conexion->close();
 }
 ?>
@@ -43,23 +43,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body>
     <h1>Baja de Pedidos</h1>
 
-    <!-- Formulario para la baja de pedidos -->
+
     <form method="POST" action="<?php echo $_SERVER["PHP_SELF"]; ?>">
         <label for="idPedido">ID del Pedido a dar de baja:</label>
         <input type="text" name="idPedido" id="idPedido" required><br><br>
         <button type="submit">Confirmar Baja</button>
     </form>
 
-    <!-- Lista de pedidos para referencia -->
+
     <div>
         <?php
-        // Conectar a la base de datos
+
         $conexion = conectar();
 
-        // Consultar la tabla de pedidos ordenados por ID
+
         $consulta_pedidos = $conexion->query("SELECT idPedido, idProducto, Cantidad, Total, idCliente, idEmpleado FROM Pedidos ORDER BY idPedido");
 
-        // Verificar si hay resultados
         if ($consulta_pedidos->num_rows > 0) {
             echo "<h2>Lista de Pedidos</h2>";
             echo "<table border='1'>
@@ -88,12 +87,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             echo "No hay pedidos registrados.";
         }
 
-        // Cerrar la conexión
+
         $conexion->close();
         ?>
     </div>
 
-    <!-- Formularios para otras operaciones (Alta, Modificación, etc.) -->
+
     <form action="Alta-pedidos.php" method="post">
         <button type="submit">Alta</button>
     </form>

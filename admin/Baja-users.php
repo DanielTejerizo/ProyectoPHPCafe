@@ -1,26 +1,26 @@
 <?php
-include('../conexion.php'); // Asegúrate de ajustar la ruta correctamente
+include('../conexion.php'); 
 
-// Verificar si se ha enviado el formulario para usuarios
+
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["NombreUsuario"])) {
-    // Obtener los valores del formulario de usuarios
+
     $NombreUsuario = $_POST["NombreUsuario"];
 
-    // Conectar a la base de datos
+
     $conexion = conectar();
 
-    // Verificar si el usuario existe antes de realizar la operación
+
     $consulta_existencia = $conexion->prepare("SELECT NombreUsuario, Tipo FROM usuarios WHERE NombreUsuario = ?");
     $consulta_existencia->bind_param("s", $NombreUsuario);
     $consulta_existencia->execute();
     $consulta_existencia->store_result();
 
     if ($consulta_existencia->num_rows > 0) {
-        // Preparar la consulta de eliminación
+
         $secuencia = $conexion->prepare("DELETE FROM usuarios WHERE NombreUsuario = ?");
         $secuencia->bind_param("s", $NombreUsuario);
 
-        // Ejecutar la consulta
+
         if ($secuencia->execute()) {
             echo "<script>mostrarAlerta();</script>";
             echo "Usuario eliminado exitosamente";
@@ -31,10 +31,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["NombreUsuario"])) {
         echo "No existe un usuario con ese nombre.";
     }
 
-    // Volver a ejecutar la consulta después de eliminar el usuario
+
     $consulta_usuarios = $conexion->query("SELECT NombreUsuario, Tipo FROM usuarios");
 
-    // Cerrar la conexión
+
     $conexion->close();
 }
 ?>
@@ -59,7 +59,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["NombreUsuario"])) {
 <body>
     <h1>Eliminación de Usuarios</h1>
 
-    <!-- Formulario para eliminar un usuario por su NombreUsuario -->
+
     <form method="POST" action="<?php echo $_SERVER["PHP_SELF"]; ?>" onsubmit="return confirmarEliminacion();">
         <label for="NombreUsuario">Nombre de Usuario a eliminar:</label>
         <input type="text" name="NombreUsuario" id="NombreUsuario" size="20" required><br><br>
@@ -71,9 +71,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["NombreUsuario"])) {
 
         $conexion = conectar();
 
-        // Consultar la tabla de proveedores
+
         $consulta_usuarios = $conexion->query("SELECT NombreUsuario,Tipo FROM usuarios");
-        // Mostrar la tabla de usuarios después de eliminar
+
         if (isset($consulta_usuarios) && $consulta_usuarios->num_rows > 0) {
             echo "<h2>Lista de Usuarios</h2>";
             echo "<table border='1'>
