@@ -26,15 +26,55 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["confirmar"])) {
 
         // Verificar si ya existe un ID de pedido en la sesión
         if (isset($_SESSION['idPedido'])) {
-            $idPedido = $_SESSION['idPedido'];
+            // Obtener el ID de cliente actual
+            $sqlClienteActual = "SELECT idCliente FROM clientes WHERE NombreCli = '$nombreUsuario'";
+            $resultClienteActual = $conn->query($sqlClienteActual);
+
+            if ($resultClienteActual->num_rows > 0) {
+                $rowClienteActual = $resultClienteActual->fetch_assoc();
+                $idClienteActual = $rowClienteActual['idCliente'];
+
+                // Obtener el ID de cliente almacenado en la sesión
+                $idClienteSesion = $_SESSION['idCliente'];
+
+                // Verificar si el cliente actual es diferente al cliente almacenado en la sesión
+                if ($idClienteActual != $idClienteSesion) {
+                    // Generar un nuevo ID de pedido para el nuevo cliente
+                    $idPedido = rand(10000, 99999);
+                    $_SESSION['idPedido'] = $idPedido;
+                    // Actualizar el ID de cliente almacenado en la sesión
+                    $_SESSION['idCliente'] = $idClienteActual;
+                } else {
+                    // Utilizar el ID de pedido existente para el mismo cliente
+                    $idPedido = $_SESSION['idPedido'];
+                }
+            } else {
+                echo "No se encontró el cliente con el nombre de usuario proporcionado.";
+                exit();
+            }
         } else {
-            // Generar un ID de pedido aleatorio
+            // Si no hay ID de pedido en la sesión, generar uno nuevo
             $idPedido = rand(10000, 99999);
-            // Almacenar el ID de pedido en la sesión
             $_SESSION['idPedido'] = $idPedido;
+
+            // Obtener el ID de cliente actual
+            $sqlClienteActual = "SELECT idCliente FROM clientes WHERE NombreCli = '$nombreUsuario'";
+            $resultClienteActual = $conn->query($sqlClienteActual);
+
+            if ($resultClienteActual->num_rows > 0) {
+                $rowClienteActual = $resultClienteActual->fetch_assoc();
+                $idClienteActual = $rowClienteActual['idCliente'];
+                $_SESSION['idCliente'] = $idClienteActual;
+            } else {
+                echo "No se encontró el cliente con el nombre de usuario proporcionado.";
+                exit();
+            }
         }
 
-        // Obtener un ID de empleado aleatorio de la tabla empleados
+        // Resto del código para obtener el ID de empleado y realizar la inserción en la tabla de pedidos
+        // ...
+
+        // Ejemplo de inserción en la tabla de pedidos (ajusta según tu base de datos)
         $sqlEmpleados = "SELECT idEmpleado FROM empleados";
         $resultEmpleados = $conn->query($sqlEmpleados);
 
@@ -47,41 +87,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["confirmar"])) {
             // Elegir aleatoriamente un ID de empleado
             $idEmpleado = $empleadosDisponibles[array_rand($empleadosDisponibles)];
 
-            // Obtener el ID del cliente a partir del nombre de usuario
-            $sqlCliente = "SELECT idCliente FROM clientes WHERE NombreCli = '$nombreUsuario'";
-            $resultCliente = $conn->query($sqlCliente);
+            // Realizar la inserción en la tabla de pedidos
+            $sqlInsertarPedido = "INSERT INTO pedidos (idPedido, idProducto, Cantidad, Total, idCliente, idEmpleado) VALUES ('$idPedido', '$idProductoSeleccionado', '$cantidad', '$total', '$idClienteActual', '$idEmpleado')";
 
-            if ($resultCliente->num_rows > 0) {
-                $rowCliente = $resultCliente->fetch_assoc();
-                $idCliente = $rowCliente['idCliente'];
-
-                // Realizar la inserción en la tabla de pedidos
-                // (Agrega aquí tu lógica para obtener más información del empleado si es necesario)
-
-                // Ejemplo de inserción en la tabla de pedidos (ajusta según tu base de datos)
-                $sqlInsertarPedido = "INSERT INTO pedidos (idPedido, idProducto, Cantidad, Total, idCliente, idEmpleado) VALUES ('$idPedido', '$idProductoSeleccionado', '$cantidad', '$total', '$idCliente', '$idEmpleado')";
-
-                if ($conn->query($sqlInsertarPedido) === TRUE) {
-                    echo "Pedido registrado correctamente. Número de Pedido: " . $idPedido;
-                } else {
-                    echo "Error al registrar el pedido: " . $conn->error;
-                }
+            if ($conn->query($sqlInsertarPedido) === TRUE) {
+                echo "Pedido registrado correctamente. Número de Pedido: " . $idPedido;
             } else {
-                echo "No se encontró el cliente con el nombre de usuario proporcionado.";
+                echo "Error al registrar el pedido: " . $conn->error;
             }
         } else {
             echo "No hay empleados disponibles.";
         }
+
+        // Cerrar la conexión
+        $conn->close();
+
+        // Limpiar las sesiones después de completar el pedido
+        unset($_SESSION['idProducto']);
+        unset($_SESSION['cantidad']);
     } else {
         echo "Error al obtener el precio del producto.";
     }
-
-    // Cerrar la conexión
-    $conn->close();
-
-    // Limpiar las sesiones después de completar el pedido
-    unset($_SESSION['idProducto']);
-    unset($_SESSION['cantidad']);
 } else {
     // Si no se ha enviado el formulario correctamente, redirigir al catálogo de productos
     header("Location: Catalogo.php");
