@@ -1,12 +1,12 @@
 <?php
-include('../conexion.php'); // Asegúrate de ajustar la ruta correctamente
+include('../conexion.php'); 
 
-// Verificar si se ha enviado el formulario para categorías
+
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["idCategoria"])) {
-    // Obtener los valores del formulario de categorías
+
     $idCategoria = $_POST["idCategoria"];
 
-    // Conectar a la base de datos
+
     $conexion = conectar();
 
     // Verificar si la categoría existe antes de eliminarla

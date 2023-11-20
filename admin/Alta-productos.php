@@ -1,9 +1,9 @@
 <?php
-include('../conexion.php'); // Asegúrate de ajustar la ruta correctamente
+include('../conexion.php'); 
 
-// Verificar si se ha enviado el formulario
+
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["id"])) {
-    // Obtener los valores del formulario
+
     $id = $_POST["id"];
     $nombreProd = $_POST["nombreProd"];
     $precio = $_POST["precio"];
@@ -11,16 +11,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["id"])) {
     $idCategoria = $_POST["idCategoria"];
     $idProveedor = $_POST["idProveedor"];
 
-    // Conectar a la base de datos
+
     $conexion = conectar();
 
-    // Preparar la consulta de inserción
+
     $secuencia = $conexion->prepare("INSERT INTO Productos (idProducto, NombreProd, Precio, Stock, IdCategoria, idProveedor) VALUES (?, ?, ?, ?, ?, ?)");
 
-    // Corregir la línea de bind_param
+
     $secuencia->bind_param('ssssid', $id, $nombreProd, $precio, $stock, $idCategoria, $idProveedor);
 
-    // Ejecutar la consulta
+
     if ($secuencia->execute()) {
         echo "<script>mostrarAlerta();</script>";
         echo "Producto dado de alta exitosamente";
@@ -28,7 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["id"])) {
         echo "Error al dar de alta el producto: " . $secuencia->error;
     }
 
-    // Cerrar la conexión
+
     $conexion->close();
 }
 ?>
@@ -61,15 +61,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["id"])) {
         <label for="idCategoria">Categoría:</label>
         <select name="idCategoria" id="idCategoria">
             <?php
-            // Conectar a la base de datos
+
             $conexion = conectar();
 
-            // Consultar las categorías disponibles
+
             $consulta_categorias = $conexion->query("SELECT idCategoria, NombreCat FROM Categoria");
 
-            // Verificar si hay resultados
+
             if ($consulta_categorias->num_rows > 0) {
-                // Mostrar opciones del desplegable
+
                 while ($fila = $consulta_categorias->fetch_assoc()) {
                     echo "<option value='{$fila['idCategoria']}'>{$fila['NombreCat']}</option>";
                 }
@@ -77,22 +77,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["id"])) {
                 echo "<option value=''>No hay categorías disponibles</option>";
             }
 
-            // Cerrar la conexión
+
             $conexion->close();
             ?>
         </select><br><br>
         <label for="idProveedor">Proveedor:</label>
         <select name="idProveedor" id="idProveedor">
             <?php
-            // Conectar a la base de datos
+
             $conexion = conectar();
 
-            // Consultar los proveedores disponibles
+
             $consulta_proveedores = $conexion->query("SELECT idProveedor, NombreProv FROM Proveedores");
 
-            // Verificar si hay resultados
+
             if ($consulta_proveedores->num_rows > 0) {
-                // Mostrar opciones del desplegable
+
                 while ($fila = $consulta_proveedores->fetch_assoc()) {
                     echo "<option value='{$fila['idProveedor']}'>{$fila['NombreProv']}</option>";
                 }
@@ -100,7 +100,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["id"])) {
                 echo "<option value=''>No hay proveedores disponibles</option>";
             }
 
-            // Cerrar la conexión
+
             $conexion->close();
             ?>
         </select><br><br>
@@ -109,13 +109,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["id"])) {
 
     <div>
         <?php
-        // Conectar a la base de datos
+
         $conexion = conectar();
 
-        // Consultar la tabla de productos ordenados por ID
+
         $consulta_productos = $conexion->query("SELECT idProducto, NombreProd, Precio, Stock, IdCategoria, idProveedor FROM Productos ORDER BY idProducto");
 
-        // Verificar si hay resultados
+
         if ($consulta_productos->num_rows > 0) {
             echo "<h2>Lista de Productos</h2>";
             echo "<table border='1'>
@@ -144,12 +144,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["id"])) {
             echo "No hay productos registrados.";
         }
 
-        // Cerrar la conexión
+
         $conexion->close();
         ?>
     </div>
 
-    <!-- Formularios para otras operaciones (Modificación, Baja, etc.) -->
+
     <form action="Modif-productos.php" method="post">
         <button type="submit">Modificación</button>
     </form>

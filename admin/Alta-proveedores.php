@@ -1,23 +1,22 @@
 <?php
-include('../conexion.php'); // Asegúrate de ajustar la ruta correctamente
+include('../conexion.php'); 
 
-// Verificar si se ha enviado el formulario
+
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["id"])) {
-    // Obtener los valores del formulario
+
     $id = $_POST["id"];
     $nombre = $_POST["nombre"];
     $direccion = $_POST["direccion"];
     $telefono = $_POST["telefono"];
     $persona = $_POST["persona"];
     echo $id;
-    // Conectar a la base de datos
+
     $conexion = conectar();
 
-    // Preparar la consulta de inserción
     $secuencia = $conexion->prepare("INSERT INTO proveedores (idProveedor, NombreProv, Direccion, Telefono, PersonaContacto) VALUES (?, ?, ?, ?, ?)");
     $secuencia->bind_param("issss", $id, $nombre, $direccion, $telefono, $persona);
 
-    // Ejecutar la consulta
+
     if ($secuencia->execute()) {
         echo "<script>mostrarAlerta();</script>";
         echo "Proveedor dado de alta exitosamente";
@@ -26,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["id"])) {
     }
 
 
-    // Cerrar la conexión
+
     $conexion->close();
 }
 ?>
@@ -62,13 +61,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["id"])) {
 
     <div>
         <?php
-        // Conectar a la base de datos
+
         $conexion = conectar();
 
-        // Consultar la tabla de proveedores
+
         $consulta_proveedores = $conexion->query("SELECT idProveedor, NombreProv, Direccion, Telefono, PersonaContacto FROM proveedores");
 
-        // Verificar si hay resultados
+
         if ($consulta_proveedores->num_rows > 0) {
             echo "<h2>Lista de Proveedores</h2>";
             echo "<table border='1'>
@@ -95,7 +94,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["id"])) {
             echo "No hay proveedores registrados.";
         }
 
-        // Cerrar la conexión
         $conexion->close();
         ?>
     </div>
