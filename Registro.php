@@ -9,9 +9,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["id"])) {
     $contrasena = $_POST["contrasena"];
     $tipoUsuario = $_POST["tipo"];
 
-    // Verificar si es un empleado y ajustar el formato del nombre de usuario
+
     if ($tipoUsuario === "Empleado") {
-        // Validar el formato del nombre de usuario para empleados
+
         if (!preg_match('/^EM\d{3}$/', $idUsuario)) {
             $mensajeError = "El nombre de usuario para empleados debe seguir el formato 'EM' seguido de tres dígitos.";
         }
@@ -74,7 +74,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["id"])) {
             <label for="contrasena">Contraseña:</label>
             <input type="password" name="contrasena" required><br>
 
-            <!-- Campo para el tipo de usuario -->
             <label for="tipo">Tipo de Usuario:</label>
             <select name="tipo" required>
                 <option value="Cliente">Cliente</option>
