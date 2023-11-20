@@ -1,61 +1,56 @@
 <?php
-include('../conexion.php'); // Asegúrate de ajustar la ruta correctamente
+include('../conexion.php');
 
-// Verificar si se ha enviado el formulario y si la clave "id" está definida
-// Verificar si se ha enviado el formulario y si la clave "id" está definida
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["id"])) {
-    // Obtener el valor del ID del formulario
+
     $id = $_POST["id"];
 
-    // Conectar a la base de datos
+
     $conexion = conectar();
 
-    // Verificar si el proveedor existe antes de modificarlo
+
     $consulta_existencia = $conexion->prepare("SELECT idProveedor FROM proveedores WHERE idProveedor = ?");
     $consulta_existencia->bind_param("i", $id);
     $consulta_existencia->execute();
     $consulta_existencia->store_result();
 
     if ($consulta_existencia->num_rows > 0) {
-        // Construir la consulta de modificación dinámicamente
+
         $consulta_modificacion = "UPDATE proveedores SET ";
         $valores = [];
 
-        // Nombre
+
         $nombre = isset($_POST["nombre"]) ? $_POST["nombre"] : null;
         if ($nombre !== null) {
             $consulta_modificacion .= "NombreProv = ?, ";
             $valores[] = $nombre;
         }
 
-        // Dirección
         $direccion = isset($_POST["direccion"]) ? $_POST["direccion"] : null;
         if ($direccion !== null) {
             $consulta_modificacion .= "Direccion = ?, ";
             $valores[] = $direccion;
         }
 
-        // Teléfono
         $telefono = isset($_POST["telefono"]) ? $_POST["telefono"] : null;
         if ($telefono !== null) {
             $consulta_modificacion .= "Telefono = ?, ";
             $valores[] = $telefono;
         }
 
-        // Persona de contacto
         $contacto = isset($_POST["contacto"]) ? $_POST["contacto"] : null;
         if ($contacto !== null) {
             $consulta_modificacion .= "PersonaContacto = ?, ";
             $valores[] = $contacto;
         }
 
-        // Eliminar la coma final si hay campos para modificar
+
         if (!empty($valores)) {
             $consulta_modificacion = rtrim($consulta_modificacion, ", ");
             $consulta_modificacion .= " WHERE idProveedor = ?";
             $valores[] = $id;
 
-            // Preparar la consulta de modificación
+
             $secuencia = $conexion->prepare($consulta_modificacion);
             $secuencia->bind_param(str_repeat("s", count($valores)), ...$valores);
 
@@ -73,7 +68,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["id"])) {
         echo "No existe un proveedor con ese ID.";
     }
 
-    // Cerrar la conexión
     $conexion->close();
 }
 
@@ -117,13 +111,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["id"])) {
 
     <div>
         <?php
-        // Conectar a la base de datos
+
         $conexion = conectar();
 
-        // Consultar la tabla de proveedores ordenados por ID
+
 $consulta_proveedores = $conexion->query("SELECT idProveedor, NombreProv, Direccion, Telefono, PersonaContacto FROM proveedores ORDER BY idProveedor");
 
-// Verificar si hay resultados
+
 if ($consulta_proveedores->num_rows > 0) {
     echo "<h2>Lista de Proveedores</h2>";
     echo "<table border='1'>
@@ -150,7 +144,7 @@ if ($consulta_proveedores->num_rows > 0) {
     echo "No hay proveedores registrados.";
 }
 
-        // Cerrar la conexión
+
         $conexion->close();
         ?>
     </div>

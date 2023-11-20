@@ -1,42 +1,41 @@
 <?php
-include('../conexion.php'); // Asegúrate de ajustar la ruta correctamente
+include('../conexion.php');
 
-// Verificar si se ha enviado el formulario y si la clave "idCategoria" está definida
+
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["idCategoria"])) {
-    // Obtener el valor del ID de la categoría del formulario
+
     $idCategoria = $_POST["idCategoria"];
 
-    // Conectar a la base de datos
+
     $conexion = conectar();
 
-    // Verificar si la categoría existe antes de modificarla
     $consulta_existencia = $conexion->prepare("SELECT idCategoria FROM Categoria WHERE idCategoria = ?");
     $consulta_existencia->bind_param("i", $idCategoria);
     $consulta_existencia->execute();
     $consulta_existencia->store_result();
 
     if ($consulta_existencia->num_rows > 0) {
-        // Construir la consulta de modificación dinámicamente
+  
         $consulta_modificacion = "UPDATE Categoria SET ";
         $valores = [];
 
-        // Nombre de la categoría
+
         $nombreCat = isset($_POST["nombreCat"]) ? $_POST["nombreCat"] : null;
         if ($nombreCat !== null) {
             $consulta_modificacion .= "NombreCat = ? ";
             $valores[] = $nombreCat;
         }
 
-        // Eliminar la coma final si hay campos para modificar
+        
         if (!empty($valores)) {
             $consulta_modificacion .= "WHERE idCategoria = ?";
             $valores[] = $idCategoria;
 
-            // Preparar la consulta de modificación
+           
             $secuencia = $conexion->prepare($consulta_modificacion);
             $secuencia->bind_param(str_repeat("s", count($valores)), ...$valores);
 
-            // Ejecutar la consulta
+
             if ($secuencia->execute()) {
                 echo "<script>mostrarAlerta();</script>";
                 echo "Categoría modificada exitosamente";
@@ -50,7 +49,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["idCategoria"])) {
         echo "No existe una categoría con ese ID.";
     }
 
-    // Cerrar la conexión
+
     $conexion->close();
 }
 ?>
@@ -75,7 +74,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["idCategoria"])) {
 <body>
     <h1>Modificación de Categorías</h1>
 
-    <!-- Formulario para modificar una categoría por su ID -->
+
     <form method="POST" action="<?php echo $_SERVER["PHP_SELF"]; ?>" onsubmit="return confirmarModificacion();">
         <label for="idCategoria">ID de la Categoría a modificar:</label>
         <input type="text" name="idCategoria" id="idCategoria" size="10" required><br><br>
@@ -86,13 +85,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["idCategoria"])) {
 
     <div>
         <?php
-        // Conectar a la base de datos
+
         $conexion = conectar();
 
-        // Consultar la tabla de categorías ordenadas por ID
+
         $consulta_categorias = $conexion->query("SELECT idCategoria, NombreCat FROM Categoria ORDER BY idCategoria");
 
-        // Verificar si hay resultados
+
         if ($consulta_categorias->num_rows > 0) {
             echo "<h2>Lista de Categorías</h2>";
             echo "<table border='1'>
@@ -113,7 +112,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["idCategoria"])) {
             echo "No hay categorías registradas.";
         }
 
-        // Cerrar la conexión
+
         $conexion->close();
         ?>
     </div>
