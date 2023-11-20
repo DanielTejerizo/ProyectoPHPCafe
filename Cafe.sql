@@ -180,7 +180,7 @@ INSERT INTO proveedores (idProveedor, NombreProv, Direccion, Telefono, PersonaCo
 
 /*Usuarios*/
 
-INSERT INTO usuarios (NombreUsuario, Tipo, Contrasenia) VALUES ("EM1","Empleado","$2y$10$p6Qfy35P25EYO/sgeynfl.sXPlIR6vU4EX121ladtS39/NlARb4by"),("CL2","Cliente","$2y$10$49bVD6OEsFU8U4Nzf7zRYOHlZAVC4lXHXsayiiowO/Am01Qc1Oswu");
+INSERT INTO usuarios (NombreUsuario, Tipo, Contrasenia) VALUES ("EM1","Empleado","$2y$10$p6Qfy35P25EYO/sgeynfl.sXPlIR6vU4EX121ladtS39/NlARb4by") /*EM1Admin*/ ,("Alfonso Marquez","Cliente","$2y$10$GerxV.5XTwfBsq3umQjaCOQQxw.bbiJDoHC6dmn.uzCWAO1rzhBfK"); /*AlfonMar*/
 
 
 /*Productos*/

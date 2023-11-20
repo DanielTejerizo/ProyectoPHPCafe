@@ -7,7 +7,15 @@ $mensajeError = "";
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["id"])) {
     $idUsuario = htmlspecialchars($_POST["id"]);
     $contrasena = $_POST["contrasena"];
-    $tipoUsuario = $_POST["tipo"]; // Nuevo campo para el tipo de usuario
+    $tipoUsuario = $_POST["tipo"];
+
+    // Verificar si es un empleado y ajustar el formato del nombre de usuario
+    if ($tipoUsuario === "Empleado") {
+        // Validar el formato del nombre de usuario para empleados
+        if (!preg_match('/^EM\d{3}$/', $idUsuario)) {
+            $mensajeError = "El nombre de usuario para empleados debe seguir el formato 'EM' seguido de tres dígitos.";
+        }
+    }
 
     if (strlen($contrasena) < 8) {
         $mensajeError = "La contraseña debe tener al menos 8 caracteres.";
@@ -24,7 +32,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["id"])) {
         $consulta->bind_param("sss", $idUsuario, $tipoUsuario, $hashContrasena);
 
         try {
-            if ($consulta->execute()) {
+            if ($mensajeError === "" && $consulta->execute()) {
                 $mensajeExito = "Registro exitoso. ¡Bienvenido!";
             } else {
                 throw new Exception("Error al registrar el usuario: " . $conexion->error);
