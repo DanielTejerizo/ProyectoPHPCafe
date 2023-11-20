@@ -24,8 +24,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["confirmar"])) {
         // Calcular el total
         $total = $cantidad * $precioProducto;
 
-        // Generar un ID de pedido aleatorio
-        $idPedido = rand(10000, 99999);
+        // Verificar si ya existe un ID de pedido en la sesión
+        if (isset($_SESSION['idPedido'])) {
+            $idPedido = $_SESSION['idPedido'];
+        } else {
+            // Generar un ID de pedido aleatorio
+            $idPedido = rand(10000, 99999);
+            // Almacenar el ID de pedido en la sesión
+            $_SESSION['idPedido'] = $idPedido;
+        }
 
         // Obtener un ID de empleado aleatorio de la tabla empleados
         $sqlEmpleados = "SELECT idEmpleado FROM empleados";
