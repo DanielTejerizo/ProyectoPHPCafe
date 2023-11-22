@@ -83,24 +83,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["filtrar"])) {
             <select name='categoria'>
                 <option value=''>Todas las categorías</option>
                 <?php
-        $conexion = conectar();
+                $conexion = conectar();
 
-        if ($conexion->connect_error) {
-            die("Conexión fallida: " . $conexion->connect_error);
-        }
+                if ($conexion->connect_error) {
+                    die("Conexión fallida: " . $conexion->connect_error);
+                }
 
-        // Consulta para obtener las categorías desde la base de datos
-        $sqlCategorias = "SELECT idCategoria, NombreCat FROM categoria";
-        $resultCategorias = $conexion->query($sqlCategorias);
+                // Consulta para obtener las categorías desde la base de datos
+                $sqlCategorias = "SELECT idCategoria, NombreCat FROM categoria";
+                $resultCategorias = $conexion->query($sqlCategorias);
 
-        if ($resultCategorias->num_rows > 0) {
-            while ($rowCategoria = $resultCategorias->fetch_assoc()) {
-                echo "<option value='" . $rowCategoria['idCategoria'] . "'>" . $rowCategoria['NombreCat'] . "</option>";
-            }
-        }
+                if ($resultCategorias->num_rows > 0) {
+                    while ($rowCategoria = $resultCategorias->fetch_assoc()) {
+                        echo "<option value='" . $rowCategoria['idCategoria'] . "'>" . $rowCategoria['NombreCat'] . "</option>";
+                    }
+                }
 
-        $conexion->close();
-        ?>
+                $conexion->close();
+                ?>
             </select>
 
             <label for='precio_min'>Precio mínimo:</label>
