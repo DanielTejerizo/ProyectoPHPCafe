@@ -106,6 +106,8 @@
 
         <input type="submit" value="Registrar">
     </form>
+
+    <a href="Catalogo.php">Volver a comprar</a>
 </body>
 
 </html>
