@@ -4,15 +4,12 @@ include '../conexion.php';
 
 session_start();
 
-
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["confirmar"])) {
     $conn = conectar();
-
 
     $idProductoSeleccionado = $_SESSION['idProducto'];
     $cantidad = $_SESSION['cantidad'];
     $nombreUsuario = $_POST['nombre_usuario'];
-
 
     $sqlPrecio = "SELECT Precio FROM productos WHERE idProducto = '$idProductoSeleccionado'";
     $resultPrecio = $conn->query($sqlPrecio);
@@ -21,12 +18,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["confirmar"])) {
         $rowPrecio = $resultPrecio->fetch_assoc();
         $precioProducto = $rowPrecio['Precio'];
 
-
         $total = $cantidad * $precioProducto;
 
-
         if (isset($_SESSION['idPedido'])) {
-
             $sqlClienteActual = "SELECT idCliente FROM clientes WHERE NombreCli = '$nombreUsuario'";
             $resultClienteActual = $conn->query($sqlClienteActual);
 
@@ -34,29 +28,33 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["confirmar"])) {
                 $rowClienteActual = $resultClienteActual->fetch_assoc();
                 $idClienteActual = $rowClienteActual['idCliente'];
 
-
                 $idClienteSesion = $_SESSION['idCliente'];
 
-
                 if ($idClienteActual != $idClienteSesion) {
-
+                    // User exists but is different from the session, create a new order
                     $idPedido = rand(10000, 99999);
                     $_SESSION['idPedido'] = $idPedido;
-
                     $_SESSION['idCliente'] = $idClienteActual;
                 } else {
-
+                    // User is the same, use the existing order
                     $idPedido = $_SESSION['idPedido'];
                 }
             } else {
-                echo "No se encontró el cliente con el nombre de usuario proporcionado.";
+                // User does not exist
+                echo "El cliente no existe en nuestra base de datos. ¿Quieres proporcionar tus datos?";
+                echo '<form action="formulario_cliente.php" method="post">';
+                echo '<input type="hidden" name="nombre_usuario" value="' . htmlspecialchars($nombreUsuario) . '">';
+                echo '<input type="hidden" name="idProducto" value="' . htmlspecialchars($idProductoSeleccionado) . '">';
+                echo '<input type="hidden" name="cantidad" value="' . htmlspecialchars($cantidad) . '">';
+                echo '<input type="submit" value="Sí">';
+                echo '</form>';
+                echo '<a href="Catalogo.php">No, volver al catálogo</a>';
                 exit();
             }
         } else {
-
+            // No existing order, create a new one
             $idPedido = rand(10000, 99999);
             $_SESSION['idPedido'] = $idPedido;
-
 
             $sqlClienteActual = "SELECT idCliente FROM clientes WHERE NombreCli = '$nombreUsuario'";
             $resultClienteActual = $conn->query($sqlClienteActual);
@@ -66,7 +64,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["confirmar"])) {
                 $idClienteActual = $rowClienteActual['idCliente'];
                 $_SESSION['idCliente'] = $idClienteActual;
             } else {
-                echo "No se encontró el cliente con el nombre de usuario proporcionado.";
+                // User does not exist
+                echo "El cliente no existe en nuestra base de datos. ¿Quieres proporcionar tus datos?";
+                echo '<form action="formulario_cliente.php" method="post">';
+                echo '<input type="hidden" name="nombre_usuario" value="' . htmlspecialchars($nombreUsuario) . '">';
+                echo '<input type="hidden" name="idProducto" value="' . htmlspecialchars($idProductoSeleccionado) . '">';
+                echo '<input type="hidden" name="cantidad" value="' . htmlspecialchars($cantidad) . '">';
+                echo '<input type="submit" value="Sí">';
+                echo '</form>';
+                echo '<a href="Catalogo.php">No, volver al catálogo</a>';
                 exit();
             }
         }
@@ -82,7 +88,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["confirmar"])) {
 
             $idEmpleado = $empleadosDisponibles[array_rand($empleadosDisponibles)];
 
-
             $sqlInsertarPedido = "INSERT INTO pedidos (idPedido, idProducto, Cantidad, Total, idCliente, idEmpleado) VALUES ('$idPedido', '$idProductoSeleccionado', '$cantidad', '$total', '$idClienteActual', '$idEmpleado')";
 
             if ($conn->query($sqlInsertarPedido) === TRUE) {
@@ -94,9 +99,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["confirmar"])) {
             echo "No hay empleados disponibles.";
         }
 
-
         $conn->close();
-
 
         unset($_SESSION['idProducto']);
         unset($_SESSION['cantidad']);
@@ -104,7 +107,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["confirmar"])) {
         echo "Error al obtener el precio del producto.";
     }
 } else {
-
     header("Location: Catalogo.php");
     exit();
 }
