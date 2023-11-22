@@ -1,4 +1,41 @@
-<link rel="stylesheet" href="../css/Productos.css">
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #c79d5a;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 20px;
+    }
+
+    input[type="submit"], a {
+        padding: 10px;
+        margin: 5px;
+        font-size: 16px;
+        text-decoration: none;
+        color: #fff;
+        background-color: #666;
+        border: 1px solid #007bff;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    input[type="submit"]:hover, a:hover {
+        background-color: #d6b482;
+            color: black;
+    }
+</style>
 <?php
 include '../conexion.php';
 
