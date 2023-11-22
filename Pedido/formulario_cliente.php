@@ -70,22 +70,25 @@
         $idProducto = $_POST['idProducto'] ?? '';
         $cantidad = $_POST['cantidad'] ?? '';
 
-        // Generate a random number
-        $randomNumber = rand(1000, 9999);
+        // Generar un número aleatorio
+        $numeroAleatorio = rand(1000, 9999);
 
-        // Combine "CL" with the random number
-        $idCliente = "CL" . $randomNumber;
+        // Combinar "CL" con el número aleatorio
+        $idCliente = "CL" . $numeroAleatorio;
 
-        // Insert into clientes table
-        $sqlInsertarUsuario = "INSERT INTO clientes (idCliente, NombreCli, Direccion, Telefono) VALUES ('$idCliente', '$nombre', '$direccion', '$telefono')";
-        
-        if ($conn->query($sqlInsertarUsuario) === TRUE) {
-            echo "Usuario registrado correctamente. ID Cliente: " . $idCliente;
+        // Verificar si el teléfono no está vacío y es numérico
+        if (!empty($telefono) && is_numeric($telefono)) {
+            // Insertar en la tabla clientes
+            $sqlInsertarUsuario = "INSERT INTO clientes (idCliente, NombreCli, Direccion, Telefono) VALUES ('$idCliente', '$nombre', '$direccion', $telefono)";
+            
+            if ($conn->query($sqlInsertarUsuario) === TRUE) {
+                echo "Usuario registrado correctamente. ID Cliente: " . $idCliente;
+            } else {
+                echo "Error al registrar el usuario: " . $conn->error;
+            }
         } else {
-            echo "Error al registrar el usuario: " . $conn->error;
+            echo "Error: El número de teléfono debe ser un valor numérico y no puede estar vacío.";
         }
-
-        // Continue with the order processing or redirect as needed...
 
         $conn->close();
     }
