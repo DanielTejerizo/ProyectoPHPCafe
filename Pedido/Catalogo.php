@@ -101,7 +101,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["filtrar"])) {
 
                 $conexion->close();
                 ?>
-            </select>
+            </select><br>
 
             <label for='precio_min'>Precio mínimo:</label>
             <input type='number' name='precio_min' min='0' step='0.01' placeholder='0.00'>
