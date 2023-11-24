@@ -96,14 +96,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["NombreUsuario"])) {
         ?>
     </div>
 
-    <form action="Alta-usuario.php" method="post">
-        <button type="submit">Crear Usuario</button>
-    </form>
-
-    <form action="Modif-usuario.php" method="post">
-        <button type="submit">Modificar Usuario</button>
-    </form>
-
 </body>
 
 </html>
