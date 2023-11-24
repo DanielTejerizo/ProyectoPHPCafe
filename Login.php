@@ -31,7 +31,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["idUsuario"])) {
 
                 // Redireccionar según el tipo de usuario
                 if ($tipoUsuario === 'Cliente') {
-                    header("Location: Admin/Controlador/Controlador.php");
+                    header("Location: pedido/catalogo.php");
                 } elseif ($tipoUsuario === 'Empleado') {
                     header("Location: admin/controlador/controlador.php");
                 } else {
