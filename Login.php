@@ -29,7 +29,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["idUsuario"])) {
                 $_SESSION['tipoUsuario'] = $tipoUsuario;
                 session_regenerate_id(true);
 
-                // Redireccionar según el tipo de usuario
+
                 if ($tipoUsuario === 'Cliente') {
                     header("Location: pedido/catalogo.php");
                 } elseif ($tipoUsuario === 'Empleado') {
