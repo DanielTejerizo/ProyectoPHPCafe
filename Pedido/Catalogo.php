@@ -1,25 +1,25 @@
 <?php
 include '../conexion.php';
 
-// Verificar si se ha enviado el formulario desde el paso anterior
+
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["comprar"])) {
-    // Obtener los datos del producto y cantidad
+
     $idProductoSeleccionado = $_POST['idProducto'];
     $cantidad = $_POST['cantidad'];
 
-    // Almacenar los datos en sesiones para usarlos en el siguiente paso
+
     session_start();
     $_SESSION['idProducto'] = $idProductoSeleccionado;
     $_SESSION['cantidad'] = $cantidad;
 
-    // Redirigir a la página para ingresar el nombre de usuario
+
     header("Location: IngresarNombreUsuario.php");
     exit();
 }
 
-// Filtrar productos por categoría y precio
+
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["filtrar"])) {
-    // Obtener valores de los filtros
+
     $filtroCategoria = $_POST['categoria'];
     $filtroPrecioMin = $_POST['precio_min'];
     $filtroPrecioMax = $_POST['precio_max'];
@@ -30,7 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["filtrar"])) {
         die("Conexión fallida: " . $conexion->connect_error);
     }
 
-    // Consulta para obtener productos filtrados
+
     $sql = "SELECT idProducto, NombreProd, Precio FROM productos WHERE 1=1";
 
     if (!empty($filtroCategoria)) {
@@ -49,14 +49,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["filtrar"])) {
 
     $conexion->close();
 } else {
-    // Si no se ha enviado el formulario de filtrado, mostrar todos los productos
+
     $conexion = conectar();
 
     if ($conexion->connect_error) {
         die("Conexión fallida: " . $conexion->connect_error);
     }
 
-    // Consulta para obtener todos los productos disponibles
+
     $sql = "SELECT idProducto, NombreProd, Precio FROM productos";
     $result = $conexion->query($sql);
 
@@ -77,7 +77,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["filtrar"])) {
     <div class="catalogo-container">
         <h1>Catálogo de Productos</h1>
 
-        <!-- Formulario de filtros -->
+
         <form method='post' action='Catalogo.php'>
             <label for='categoria'>Categoría:</label>
             <select name='categoria'>
@@ -89,7 +89,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["filtrar"])) {
                     die("Conexión fallida: " . $conexion->connect_error);
                 }
 
-                // Consulta para obtener las categorías desde la base de datos
+
                 $sqlCategorias = "SELECT idCategoria, NombreCat FROM categoria";
                 $resultCategorias = $conexion->query($sqlCategorias);
 
@@ -113,7 +113,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["filtrar"])) {
         </form>
 
         <?php
-        // Mostrar productos según los resultados de la consulta
+
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
                 echo "<div class='producto'>";

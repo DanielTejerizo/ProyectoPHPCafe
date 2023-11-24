@@ -68,16 +68,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["confirmar"])) {
                 $idClienteSesion = $_SESSION['idCliente'];
 
                 if ($idClienteActual != $idClienteSesion) {
-                    // User exists but is different from the session, create a new order
+
                     $idPedido = rand(10000, 99999);
                     $_SESSION['idPedido'] = $idPedido;
                     $_SESSION['idCliente'] = $idClienteActual;
                 } else {
-                    // User is the same, use the existing order
+
                     $idPedido = $_SESSION['idPedido'];
                 }
             } else {
-                // User does not exist
+
                 echo "El cliente no existe en nuestra base de datos. ¿Quieres proporcionar tus datos?";
                 echo '<form action="formulario_cliente.php" method="post">';
                 echo '<input type="hidden" name="nombre_usuario" value="' . htmlspecialchars($nombreUsuario) . '">';
@@ -89,7 +89,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["confirmar"])) {
                 exit();
             }
         } else {
-            // No existing order, create a new one
+
             $idPedido = rand(10000, 99999);
             $_SESSION['idPedido'] = $idPedido;
 
@@ -101,7 +101,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["confirmar"])) {
                 $idClienteActual = $rowClienteActual['idCliente'];
                 $_SESSION['idCliente'] = $idClienteActual;
             } else {
-                // User does not exist
+
                 echo "El cliente no existe en nuestra base de datos. ¿Quieres proporcionar tus datos?";
                 echo '<form action="formulario_cliente.php" method="post">';
                 echo '<input type="hidden" name="nombre_usuario" value="' . htmlspecialchars($nombreUsuario) . '">';

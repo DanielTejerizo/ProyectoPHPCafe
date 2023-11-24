@@ -70,15 +70,15 @@
         $idProducto = $_POST['idProducto'] ?? '';
         $cantidad = $_POST['cantidad'] ?? '';
 
-        // Generar un número aleatorio
+
         $numeroAleatorio = rand(1000, 9999);
 
-        // Combinar "CL" con el número aleatorio
+
         $idCliente = "CL" . $numeroAleatorio;
 
-        // Verificar si el teléfono no está vacío y es numérico
+
         if (!empty($telefono) && is_numeric($telefono)) {
-            // Insertar en la tabla clientes
+
             $sqlInsertarUsuario = "INSERT INTO clientes (idCliente, NombreCli, Direccion, Telefono) VALUES ('$idCliente', '$nombre', '$direccion', $telefono)";
             
             if ($conn->query($sqlInsertarUsuario) === TRUE) {
