@@ -82,7 +82,7 @@
             $sqlInsertarUsuario = "INSERT INTO clientes (idCliente, NombreCli, Direccion, Telefono) VALUES ('$idCliente', '$nombre', '$direccion', $telefono)";
             
             if ($conn->query($sqlInsertarUsuario) === TRUE) {
-                echo "Usuario registrado correctamente. ID Cliente: " . $idCliente;
+                echo "Usuario registrado correctamente.";
             } else {
                 echo "Error al registrar el usuario: " . $conn->error;
             }
