@@ -104,7 +104,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["confirmar"])) {
                 $_SESSION['idCliente'] = $idClienteActual;
             } else {
 
-                echo "El cliente no existe en nuestra base de datos. ¿Quieres proporcionar tus datos?";
+                echo "No ha realizado nunca un pedido. ¿Quieres proporcionar tus datos para realizar un pedido??";
                 echo '<form action="formulario_cliente.php" method="post">';
                 echo '<input type="hidden" name="nombre_usuario" value="' . htmlspecialchars($nombreUsuario) . '">';
                 echo '<input type="hidden" name="idProducto" value="' . htmlspecialchars($idProductoSeleccionado) . '">';
